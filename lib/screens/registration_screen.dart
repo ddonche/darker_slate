@@ -78,42 +78,52 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             SizedBox(
               height: 24.0,
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 16.0),
-              child: Material(
-                color: Colors.red[900],
-                // borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                elevation: 5.0,
-                child: MaterialButton(
-                  onPressed: () {
-                    //Implement registration functionality.
-                  },
-                  minWidth: 200.0,
-                  height: 60.0,
-                  child: Text(
-                    'Register',
-                    style: TextStyle(color: Colors.white, fontSize: 18,),
-                  ),
-                ),
-              ),
-            ),
-            FlatButton(
-              onPressed: () {
-                Navigator.pushNamed(context, LoginScreen.id);
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.arrow_left),
-                  Text(
-                    'Already have an account? Login!',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
+            Row(
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: FlatButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, LoginScreen.id);
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.arrow_left),
+                        Text(
+                          'Login',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                ],
-              ),
+                ),
+                Expanded(
+                  flex: 4,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 16.0),
+                    child: Material(
+                      color: Colors.red[900],
+                      // borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                      elevation: 5.0,
+                      child: MaterialButton(
+                        onPressed: () {
+                          //Implement registration functionality.
+                        },
+                        minWidth: 200.0,
+                        height: 60.0,
+                        child: Text(
+                          'Register',
+                          style: TextStyle(color: Colors.white, fontSize: 18,),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ],
         ),
