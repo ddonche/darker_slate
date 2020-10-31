@@ -1,4 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'registration_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String id = 'login_screen';
@@ -11,7 +14,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.blueGrey[400],
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 24.0),
         child: Column(
@@ -34,20 +37,19 @@ class _LoginScreenState extends State<LoginScreen> {
               },
               decoration: InputDecoration(
                 hintText: 'Enter your email',
+                prefixIcon: Icon(Icons.email),
                 contentPadding:
-                EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+                    EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(32.0)),
-                ),
+                    // borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                    ),
                 enabledBorder: OutlineInputBorder(
-                  borderSide:
-                  BorderSide(color: Colors.red[500], width: 1.0),
-                  borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                  borderSide: BorderSide(color: Colors.white, width: 1.0),
+                  // borderRadius: BorderRadius.all(Radius.circular(32.0)),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderSide:
-                  BorderSide(color: Colors.red[500], width: 2.0),
-                  borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                  borderSide: BorderSide(color: Colors.red[500], width: 3.0),
+                  // borderRadius: BorderRadius.all(Radius.circular(32.0)),
                 ),
               ),
             ),
@@ -60,20 +62,19 @@ class _LoginScreenState extends State<LoginScreen> {
               },
               decoration: InputDecoration(
                 hintText: 'Enter your password.',
+                prefixIcon: Icon(Icons.lock),
                 contentPadding:
-                EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+                    EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(32.0)),
-                ),
+                    // borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                    ),
                 enabledBorder: OutlineInputBorder(
-                  borderSide:
-                  BorderSide(color: Colors.red[500], width: 1.0),
-                  borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                  borderSide: BorderSide(color: Colors.white, width: 1.0),
+                  // borderRadius: BorderRadius.all(Radius.circular(32.0)),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderSide:
-                  BorderSide(color: Colors.red[500], width: 2.0),
-                  borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                  borderSide: BorderSide(color: Colors.red[500], width: 3.0),
+                  // borderRadius: BorderRadius.all(Radius.circular(32.0)),
                 ),
               ),
             ),
@@ -84,18 +85,40 @@ class _LoginScreenState extends State<LoginScreen> {
               padding: EdgeInsets.symmetric(vertical: 16.0),
               child: Material(
                 color: Colors.red[900],
-                borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                // borderRadius: BorderRadius.all(Radius.circular(30.0)),
                 elevation: 5.0,
                 child: MaterialButton(
                   onPressed: () {
                     //Implement login functionality.
                   },
                   minWidth: 200.0,
-                  height: 42.0,
+                  height: 60.0,
                   child: Text(
                     'Log In',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                    ),
                   ),
                 ),
+              ),
+            ),
+            FlatButton(
+              onPressed: () {
+                Navigator.pushNamed(context, RegistrationScreen.id);
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.arrow_left),
+                  Text(
+                    'Don\'t have an account? Register!',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                    ),
+                  ),
+                ],
               ),
             ),
           ],

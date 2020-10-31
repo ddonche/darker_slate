@@ -9,40 +9,12 @@ class WelcomeScreen extends StatefulWidget {
   _WelcomeScreenState createState() => _WelcomeScreenState();
 }
 
-class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProviderStateMixin {
-  AnimationController animController;
-  Animation animation;
-
-  @override
-  void initState() {
-    super.initState();
-
-    animController = AnimationController(
-      duration: Duration(seconds: 1),
-      vsync: this,
-      // upperBound: 100,
-    );
-
-    animation = ColorTween(begin: Colors.blueGrey, end: Colors.white).animate(animController);
-    animController.forward();
-
-    animController.addListener(() {
-      setState(() {
-      });
-      print(animation.value);
-    });
-  }
-
-  @override
-  void dispose() {
-    animController.dispose();
-    super.dispose();
-  }
+class _WelcomeScreenState extends State<WelcomeScreen> {
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: animation.value,
+      backgroundColor: Colors.blueGrey[400],
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 24.0),
         child: Column(
@@ -50,20 +22,26 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Hero(
-                  tag: 'logo',
-                  child: Container(
-                    child: Image.asset('images/logo.png'),
-                    height: 200,
-                  ),
-                ),
-                Text(
-                  'Darker Slate',
-                  style: TextStyle(
-                    fontSize: 45.0,
-                    fontWeight: FontWeight.w900,
-                  ),
+                Column(
+                  children: [
+                    Hero(
+                      tag: 'logo',
+                      child: Container(
+                        child: Image.asset('images/logo.png'),
+                        height: 200,
+                      ),
+                    ),
+                    Text(
+                      'Darker Slate',
+                      style: TextStyle(
+                        fontSize: 45.0,
+                        fontWeight: FontWeight.w900,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -74,14 +52,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
               padding: EdgeInsets.symmetric(vertical: 16.0),
               child: Material(
                 elevation: 5.0,
-                color: Colors.red[500],
-                borderRadius: BorderRadius.circular(30.0),
+                color: Colors.white,
+                // borderRadius: BorderRadius.circular(30.0),
                 child: MaterialButton(
                   onPressed: () {
                     Navigator.pushNamed(context, LoginScreen.id);
                   },
                   minWidth: 200.0,
-                  height: 42.0,
+                  height: 60,
                   child: Text(
                     'Log In',
                   ),
@@ -92,16 +70,17 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
               padding: EdgeInsets.symmetric(vertical: 16.0),
               child: Material(
                 color: Colors.red[900],
-                borderRadius: BorderRadius.circular(30.0),
+                // borderRadius: BorderRadius.circular(30.0),
                 elevation: 5.0,
                 child: MaterialButton(
                   onPressed: () {
                     Navigator.pushNamed(context, RegistrationScreen.id);
                   },
                   minWidth: 200.0,
-                  height: 42.0,
+                  height: 60,
                   child: Text(
                     'Register',
+                    style: TextStyle(color: Colors.white),
                   ),
                 ),
               ),
