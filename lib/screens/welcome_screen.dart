@@ -1,5 +1,6 @@
-import '../screens/registration_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
+import '../screens/registration_screen.dart';
 import '../screens/login_screen.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -28,33 +29,30 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  Column(
-                    children: [
-                      Hero(
-                        tag: 'logo',
-                        child: Container(
-                          child: Image.asset('assets/images/logo.png'),
-                          height: 220,
+                  Hero(
+                    tag: 'logo',
+                    child: Container(
+                      child: Image.asset('assets/images/logo.png'),
+                      height: 60,
+                      padding: EdgeInsets.symmetric(horizontal: 8),
+                    ),
+                  ),
+                  TypewriterAnimatedTextKit(
+                    text: ['Darker Slate'],
+                    textStyle: TextStyle(
+                      shadows: [
+                        Shadow(
+                          blurRadius: 4.0,
+                          color: Color.fromRGBO(0, 0, 0, 0.5),
+                          offset: Offset(5.0, 5.0),
                         ),
-                      ),
-                      Text(
-                        'Darker Slate',
-                        style: TextStyle(
-                          shadows: [
-                            Shadow(
-                              blurRadius: 4.0,
-                              color: Color.fromRGBO(0, 0, 0, 0.5),
-                              offset: Offset(5.0, 5.0),
-                            ),
-                          ],
-                          fontSize: 45.0,
-                          fontWeight: FontWeight.w900,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ],
+                      ],
+                      fontSize: 40.0,
+                      fontWeight: FontWeight.w900,
+                      color: Colors.white,
+                    ),
                   ),
                 ],
               ),
