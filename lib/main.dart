@@ -1,19 +1,30 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'screens/welcome_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/registration_screen.dart';
+import 'screens/level_screen.dart';
 
-void main() => runApp(DarkerSlate());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(DarkerSlate());
+}
 
 class DarkerSlate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        primarySwatch: Colors.red,
+        fontFamily: 'Vollkorn',
+        primaryColor: Colors.red[900],
         accentColor: Colors.blueGrey,
-        textTheme: TextTheme(
-          bodyText2: TextStyle(color: Colors.black),
+        textTheme: ThemeData.light().textTheme.copyWith(
+          headline6: TextStyle(
+            fontFamily: 'Vollkorn',
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
       initialRoute: WelcomeScreen.id,
@@ -21,6 +32,7 @@ class DarkerSlate extends StatelessWidget {
         LoginScreen.id : (context) => LoginScreen(),
         RegistrationScreen.id : (context) => RegistrationScreen(),
         WelcomeScreen.id : (context) => WelcomeScreen(),
+        LevelScreen.id : (context) => LevelScreen(),
       },
     );
   }
