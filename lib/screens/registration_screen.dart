@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'login_screen.dart';
+import 'welcome_screen.dart';
 
 class RegistrationScreen extends StatefulWidget {
   static const String id = 'registration_screen';
@@ -16,7 +17,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       // backgroundColor: Colors.blueGrey[400],
       body: Stack(children: <Widget>[
         Image(
-          image: AssetImage("images/background3.jpg"),
+          image: AssetImage("assets/images/background3.jpg"),
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
           fit: BoxFit.cover,
@@ -30,12 +31,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               Hero(
                 tag: 'logo',
                 child: Container(
-                  height: 200.0,
-                  child: Image.asset('images/logo.png'),
+                  height: 140.0,
+                  child: GestureDetector(
+                      onTap: () {Navigator.pushNamed(context, WelcomeScreen.id);},
+                      child: Image.asset('assets/images/logo.png')),
                 ),
               ),
               SizedBox(
-                height: 48.0,
+                height: 28.0,
               ),
               TextField(
                 onChanged: (value) {
@@ -49,20 +52,20 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   contentPadding:
                       EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
                   border: OutlineInputBorder(
-                      // borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                      borderRadius: BorderRadius.all(Radius.circular(32.0)),
                       ),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.white, width: 1.0),
-                    // borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                    borderRadius: BorderRadius.all(Radius.circular(32.0)),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.red[500], width: 2.0),
-                    // borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                    borderRadius: BorderRadius.all(Radius.circular(32.0)),
                   ),
                 ),
               ),
               SizedBox(
-                height: 8.0,
+                height: 12.0,
               ),
               TextField(
                 onChanged: (value) {
@@ -76,20 +79,17 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   contentPadding:
                       EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
                   border: OutlineInputBorder(
-                      // borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                      borderRadius: BorderRadius.all(Radius.circular(32.0)),
                       ),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.white, width: 1.0),
-                    // borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                    borderRadius: BorderRadius.all(Radius.circular(32.0)),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.red[500], width: 2.0),
-                    // borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                    borderRadius: BorderRadius.all(Radius.circular(32.0)),
                   ),
                 ),
-              ),
-              SizedBox(
-                height: 24.0,
               ),
               Row(
                 children: [
@@ -117,17 +117,17 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   Expanded(
                     flex: 2,
                     child: Padding(
-                      padding: EdgeInsets.symmetric(vertical: 16.0),
+                      padding: EdgeInsets.symmetric(vertical: 14.0),
                       child: Material(
                         color: Colors.red[900],
-                        borderRadius: BorderRadius.all(Radius.circular(12.0)),
+                        borderRadius: BorderRadius.all(Radius.circular(32.0)),
                         elevation: 5.0,
                         child: MaterialButton(
                           onPressed: () {
                             //Implement registration functionality.
                           },
                           minWidth: 200.0,
-                          height: 60.0,
+                          height: 48.0,
                           child: Text(
                             'Register',
                             style: TextStyle(

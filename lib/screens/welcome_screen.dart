@@ -16,7 +16,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       // backgroundColor: Colors.blueGrey[400],
       body: Stack(children: <Widget>[
         Image(
-          image: AssetImage("images/background.jpg"),
+          image: AssetImage("assets/images/background.jpg"),
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
           fit: BoxFit.cover,
@@ -35,8 +35,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       Hero(
                         tag: 'logo',
                         child: Container(
-                          child: Image.asset('images/logo.png'),
-                          height: 150,
+                          child: Image.asset('assets/images/logo.png'),
+                          height: 220,
                         ),
                       ),
                       Text(
@@ -59,20 +59,20 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 ],
               ),
               SizedBox(
-                height: 48.0,
+                height: 20.0,
               ),
               Padding(
-                padding: EdgeInsets.symmetric(vertical: 16.0),
+                padding: EdgeInsets.symmetric(vertical: 10.0),
                 child: Material(
                   elevation: 5.0,
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(12.0),
+                  borderRadius: BorderRadius.circular(32.0),
                   child: MaterialButton(
                     onPressed: () {
                       Navigator.pushNamed(context, LoginScreen.id);
                     },
                     minWidth: 200.0,
-                    height: 60,
+                    height: 48,
                     child: Text(
                       'Log In',
                     ),
@@ -80,17 +80,17 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.symmetric(vertical: 16.0),
+                padding: EdgeInsets.symmetric(vertical: 10.0),
                 child: Material(
                   color: Colors.red[900],
-                  borderRadius: BorderRadius.circular(12.0),
+                  borderRadius: BorderRadius.circular(32.0),
                   elevation: 5.0,
                   child: MaterialButton(
                     onPressed: () {
                       Navigator.pushNamed(context, RegistrationScreen.id);
                     },
                     minWidth: 200.0,
-                    height: 60,
+                    height: 48,
                     child: Text(
                       'Register',
                       style: TextStyle(color: Colors.white),
