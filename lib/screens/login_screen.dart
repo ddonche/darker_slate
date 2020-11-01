@@ -1,9 +1,12 @@
 import 'package:darker_slate/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 import 'registration_screen.dart';
 import 'welcome_screen.dart';
+import 'level_screen.dart';
 import '../widgets/rounded_button.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -14,11 +17,18 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final _auth = FirebaseAuth.instance;
+  bool showSpinner = false;
+  String email;
+  String password;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       // backgroundColor: Colors.blueGrey[400],
-      body: Stack(children: <Widget>[
+      body: ModalProgressHUD(
+        inAsyncCall: showSpinner,
+        child: Stack(children: <Widget>[
           Image(
             image: AssetImage("assets/images/background2.jpg"),
             width: MediaQuery.of(context).size.width,
@@ -26,46 +36,50 @@ class _LoginScreenState extends State<LoginScreen> {
             fit: BoxFit.cover,
           ),
           Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Hero(
-                tag: 'logo',
-                child: Container(
-                  height: 140.0,
-                  child: GestureDetector(
-                      onTap: () {Navigator.pushNamed(context, WelcomeScreen.id);},
-                      child: Image.asset('assets/images/logo.png')),
+            padding: EdgeInsets.symmetric(horizontal: 24.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Hero(
+                  tag: 'logo',
+                  child: Container(
+                    height: 140.0,
+                    child: GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, WelcomeScreen.id);
+                        },
+                        child: Image.asset('assets/images/logo.png')),
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: 28.0,
-              ),
-              TextField(
-                keyboardType: TextInputType.emailAddress,
-                textAlign: TextAlign.center,
-                onChanged: (value) {
-                  //Do something with the user input.
-                },
-                decoration: kTextFieldDecoration.copyWith(hintText: 'Enter your email'),
-              ),
-              SizedBox(
-                height: 12.0,
-              ),
-              TextField(
-                obscureText: true,
-                textAlign: TextAlign.center,
-                onChanged: (value) {
-                  //Do something with the user input.
-                },
-                decoration: kTextFieldDecoration.copyWith(hintText: 'Enter your password'),
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    flex: 1,
+                SizedBox(
+                  height: 28.0,
+                ),
+                TextField(
+                  keyboardType: TextInputType.emailAddress,
+                  textAlign: TextAlign.center,
+                  onChanged: (value) {
+                    email = value;
+                  },
+                  decoration:
+                      kTextFieldDecoration.copyWith(hintText: 'Enter your email'),
+                ),
+                SizedBox(
+                  height: 12.0,
+                ),
+                TextField(
+                  obscureText: true,
+                  textAlign: TextAlign.center,
+                  onChanged: (value) {
+                    password = value;
+                  },
+                  decoration: kTextFieldDecoration.copyWith(
+                      hintText: 'Enter your password'),
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 1,
                       child: FlatButton(
                         onPressed: () {
                           Navigator.pushNamed(context, RegistrationScreen.id);
@@ -85,20 +99,37 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                     ),
-                  Expanded(
-                    flex: 2,
-                    child: RoundedButton(
-                      title: 'Login',
-                      colour: Colors.blueGrey,
-                      onPressed: () {},
+                    Expanded(
+                      flex: 2,
+                      child: RoundedButton(
+                        title: 'Login',
+                        colour: Colors.blueGrey,
+                        onPressed: () async {
+                          setState(() {
+                            showSpinner = true;
+                          });
+                          try {
+                            final user = await _auth.signInWithEmailAndPassword(
+                                email: email, password: password);
+                            if (user != null) {
+                              Navigator.pushNamed(context, LevelScreen.id);
+                            }
+                            setState(() {
+                              showSpinner = false;
+                            });
+                          } catch (e) {
+                            print(e);
+                          }
+                        },
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+              ],
+            ),
           ),
-        ),
-      ]),
+        ]),
+      ),
     );
   }
 }

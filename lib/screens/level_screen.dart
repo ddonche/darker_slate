@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../widgets/drawer.dart';
+import 'welcome_screen.dart';
 
 // import '../widgets/rounded_button.dart';
 
@@ -27,7 +28,7 @@ class _LevelScreenState extends State<LevelScreen> {
       final user = await _auth.currentUser;
       if (user != null) {
         loggedInUser = user;
-        print(loggedInUser.email);
+        // print(loggedInUser.email);
       }
     } catch (e) {
       print(e);
@@ -50,6 +51,14 @@ class _LevelScreenState extends State<LevelScreen> {
             icon: const Icon(Icons.monetization_on),
             tooltip: 'Credits',
             onPressed: () {},
+          ),
+          IconButton(
+            icon: const Icon(Icons.close),
+            tooltip: 'Log Out',
+            onPressed: () {
+              _auth.signOut();
+              Navigator.pushNamed(context, WelcomeScreen.id);
+            },
           ),
         ],
       ),
