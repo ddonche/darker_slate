@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "525087899617",
+    "firebase_url": "https://darker-slate.firebaseio.com",
+    "project_id": "darker-slate",
+    "storage_bucket": "darker-slate.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:525087899617:android:b3ee2329f2c25366b79ca0",
+        "android_client_info": {
+          "package_name": "com.darkanacreative.darker_slate"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "525087899617-5bvklekssjnk1e0qse8fs07gv8sf82re.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAhOcMZ0CH4IUkfdsW5z9eWu31nzGChz4U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "525087899617-5bvklekssjnk1e0qse8fs07gv8sf82re.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
