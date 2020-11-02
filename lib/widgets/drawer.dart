@@ -47,10 +47,11 @@ class AppDrawer extends StatelessWidget {
         children: <Widget>[
           _createHeader(),
           _createDrawerItem(icon: Icons.account_circle, text: 'Profile',),
+          _createDrawerItem(icon: Icons.monetization_on, text: 'Credits',),
           _createDrawerItem(icon: Icons.settings, text: 'Account Settings',),
           Divider(),
           _createDrawerItem(icon: Icons.book, text: 'Story Progress',),
-          _createDrawerItem(icon: Icons.note, text: 'My Notes', onTap: () {
+          _createDrawerItem(icon: Icons.description, text: 'Field Notes', onTap: () {
             Navigator.pushNamed(context, NoteScreen.id);
           },),
           _createDrawerItem(icon: Icons.chat, text: 'Messages'),
