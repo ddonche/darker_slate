@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../screens/note_screen.dart';
 
 class AppDrawer extends StatelessWidget {
 
@@ -49,7 +50,9 @@ class AppDrawer extends StatelessWidget {
           _createDrawerItem(icon: Icons.settings, text: 'Account Settings',),
           Divider(),
           _createDrawerItem(icon: Icons.book, text: 'Story Progress',),
-          _createDrawerItem(icon: Icons.note, text: 'My Notes',),
+          _createDrawerItem(icon: Icons.note, text: 'My Notes', onTap: () {
+            Navigator.pushNamed(context, NoteScreen.id);
+          },),
           _createDrawerItem(icon: Icons.chat, text: 'Messages'),
           _createDrawerItem(icon: Icons.emoji_events, text: 'Leaderboards'),
           Divider(),

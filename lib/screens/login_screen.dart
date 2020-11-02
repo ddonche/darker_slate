@@ -35,98 +35,104 @@ class _LoginScreenState extends State<LoginScreen> {
             height: MediaQuery.of(context).size.height,
             fit: BoxFit.cover,
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 24.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                Hero(
-                  tag: 'logo',
-                  child: Container(
-                    height: 140.0,
-                    child: GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(context, WelcomeScreen.id);
-                        },
-                        child: Image.asset('assets/images/logo.png')),
-                  ),
-                ),
-                SizedBox(
-                  height: 28.0,
-                ),
-                TextField(
-                  keyboardType: TextInputType.emailAddress,
-                  textAlign: TextAlign.center,
-                  onChanged: (value) {
-                    email = value;
-                  },
-                  decoration: kTextFieldDecoration.copyWith(
-                      prefixIcon: Icon(Icons.email),
-                      hintText: 'Enter your email'),
-                ),
-                SizedBox(
-                  height: 12.0,
-                ),
-                TextField(
-                  obscureText: true,
-                  textAlign: TextAlign.center,
-                  onChanged: (value) {
-                    password = value;
-                  },
-                  decoration: kTextFieldDecoration.copyWith(
-                      hintText: 'Enter your password'),
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: FlatButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, RegistrationScreen.id);
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(Icons.arrow_left, color: Colors.red[900]),
-                            Text(
-                              'Register',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 14,
-                              ),
-                            ),
-                          ],
-                        ),
+          Center(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    Hero(
+                      tag: 'logo',
+                      child: Container(
+                        height: 140.0,
+                        child: GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(context, WelcomeScreen.id);
+                            },
+                            child: Image.asset('assets/images/logo.png')),
                       ),
                     ),
-                    Expanded(
-                      flex: 2,
-                      child: RoundedButton(
-                        title: 'Login',
-                        colour: Colors.blueGrey,
-                        onPressed: () async {
-                          setState(() {
-                            showSpinner = true;
-                          });
-                          try {
-                            final user = await _auth.signInWithEmailAndPassword(
-                                email: email, password: password);
-                            if (user != null) {
-                              Navigator.pushNamed(context, LevelScreen.id);
-                            }
-                            setState(() {
-                              showSpinner = false;
-                            });
-                          } catch (e) {
-                            print(e);
-                          }
-                        },
-                      ),
+                    SizedBox(
+                      height: 28.0,
+                    ),
+                    TextField(
+                      keyboardType: TextInputType.emailAddress,
+                      textAlign: TextAlign.center,
+                      onChanged: (value) {
+                        email = value;
+                      },
+                      decoration: kTextFieldDecoration.copyWith(
+                          prefixIcon: Icon(Icons.email),
+                          hintText: 'Enter your email'),
+                    ),
+                    SizedBox(
+                      height: 12.0,
+                    ),
+                    TextField(
+                      obscureText: true,
+                      textAlign: TextAlign.center,
+                      onChanged: (value) {
+                        password = value;
+                      },
+                      decoration: kTextFieldDecoration.copyWith(
+                          hintText: 'Enter your password'),
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: FlatButton(
+                            onPressed: () {
+                              Navigator.pushNamed(
+                                  context, RegistrationScreen.id);
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.arrow_left, color: Colors.red[900]),
+                                Text(
+                                  'Register',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: RoundedButton(
+                            title: 'Login',
+                            colour: Colors.blueGrey,
+                            onPressed: () async {
+                              setState(() {
+                                showSpinner = true;
+                              });
+                              try {
+                                final user =
+                                    await _auth.signInWithEmailAndPassword(
+                                        email: email, password: password);
+                                if (user != null) {
+                                  Navigator.pushNamed(context, LevelScreen.id);
+                                }
+                                setState(() {
+                                  showSpinner = false;
+                                });
+                              } catch (e) {
+                                print(e);
+                              }
+                            },
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
-              ],
+              ),
             ),
           ),
         ]),
