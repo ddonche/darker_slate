@@ -112,7 +112,7 @@ class _LevelScreenState extends State<LevelScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text('Level 17'),
+        title: const Text('Chapter 17'),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.chat),
@@ -133,71 +133,105 @@ class _LevelScreenState extends State<LevelScreen> {
         child: Column(children: <Widget>[
           Padding(
             padding: const EdgeInsets.all(12),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                RaisedButton(
-                  color: Colors.green,
-                  padding: EdgeInsets.all(8.0),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0)),
-                  elevation: 5,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
+            child: Container(
+              height: 100,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Column(
                     children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: Icon(
-                          Icons.thumb_up,
-                          color: Colors.lightGreenAccent,
+                      Ink(
+                        decoration: const ShapeDecoration(
+                          color: Colors.green,
+                          shape: CircleBorder(),
+                        ),
+                        child: IconButton(
+                          icon: Icon(Icons.mood),
+                          color: Colors.white,
+                          onPressed: () {},
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(2.0),
+                        padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          '421 solves',
+                          '476',
                           style: TextStyle(
-                            color: Colors.white,
+                            fontSize: 16,
                             fontWeight: FontWeight.bold,
+                            color: Colors.green,
                           ),
+                        ),
+                      ),
+                      Text(
+                        'solves',
+                        style: TextStyle(
+                          fontSize: 10,
                         ),
                       ),
                     ],
                   ),
-                  onPressed: () {},
-                ),
-                SizedBox(width: 30),
-                RaisedButton(
-                  color: Colors.red[900],
-                  padding: EdgeInsets.all(8.0),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0)),
-                  elevation: 5,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
+                  VerticalDivider(),
+                  Column(
                     children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: Icon(
-                          Icons.thumb_down,
-                          color: Colors.redAccent,
+                      Ink(
+                        decoration: const ShapeDecoration(
+                          color: Colors.black,
+                          shape: CircleBorder(),
+                        ),
+                        child: IconButton(
+                          icon: Icon(Icons.analytics),
+                          color: Colors.white,
+                          onPressed: () {},
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(2.0),
+                        padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          '165500 fails',
+                          '8.3',
                           style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
+                              fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Text(
+                        'difficulty rating',
+                        style: TextStyle(
+                          fontSize: 10,
                         ),
                       ),
                     ],
                   ),
-                  onPressed: () {},
-                ),
-              ],
+                  VerticalDivider(),
+                  Column(
+                    children: <Widget>[
+                      Ink(
+                        decoration: const ShapeDecoration(
+                          color: Colors.red,
+                          shape: CircleBorder(),
+                        ),
+                        child: IconButton(
+                          icon: Icon(Icons.mood_bad),
+                          color: Colors.white,
+                          onPressed: () {},
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          '3976',
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold, color: Colors.red,),
+                        ),
+                      ),
+                      Text(
+                        'fails',
+                        style: TextStyle(
+                          fontSize: 10,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
           Divider(
@@ -205,7 +239,21 @@ class _LevelScreenState extends State<LevelScreen> {
             endIndent: 20,
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 18.0, horizontal: 40,),
+            padding: const EdgeInsets.all(8),
+            child: Text(
+              'Chapter 17',
+              style: TextStyle(
+                fontFamily: 'Vollkorn',
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              vertical: 18.0,
+              horizontal: 40,
+            ),
             child: Text(
               'Ballast Barbary Coast red ensign aye rope end transom Plate Fleet mizzenmast chase guns barkadeer. Red ensign Chain Shot league scourge of the seven seas ye chase rope end hempen halter list hearties. Draught warp American Main gibbet careen galleon shrouds fire in the hole prow strike colors. \n\nMizzenmast execution dock strike colors long boat mutiny interloper prow lugger maroon hail-shot. Cat o\'nine tails Arr to go on account long boat yardarm doubloon Sink me belay tackle black jack. Yellow Jack squiffy blow the man down fire in the hole stern hands fathom gun bring a spring upon her cable yo-ho-ho. \n\nAhoy yardarm nipperkin sutler quarterdeck bilge rat strike colors lad coxswain hail-shot. Brethren of the Coast scourge of the seven seas fathom gun yo-ho-ho ho marooned no prey, no pay hornswaggle bowsprit. Sheet handsomely belay marooned parley weigh anchor scurvy prow pirate hempen halter.',
               style: TextStyle(
@@ -222,15 +270,12 @@ class _LevelScreenState extends State<LevelScreen> {
             elevation: 5,
             margin: EdgeInsets.symmetric(vertical: 12, horizontal: 30),
             child: ListTile(
-              leading: CircleAvatar(
-                radius: 20,
-                backgroundColor: Colors.red[900],
-                child: Padding(
-                  padding: EdgeInsets.all(6),
-                  child: FittedBox(
-                    child: Text('1 of 3'),
-                  ),
-                ),
+              leading: Text(
+                '1',
+                style: TextStyle(
+                    fontSize: 38,
+                    fontWeight: FontWeight.w900,
+                    color: Colors.red[900]),
               ),
               title:
                   Text('Hint:', style: Theme.of(context).textTheme.headline6),
@@ -254,25 +299,25 @@ class _LevelScreenState extends State<LevelScreen> {
           children: <Widget>[
             IconButton(
               icon: Icon(Icons.note_add),
-              color: Colors.black,
+              color: Colors.white,
               tooltip: 'Add Note',
               onPressed: () => _startAddNewNote(context),
             ),
             IconButton(
               icon: Icon(Icons.live_help),
-              color: Colors.black,
+              color: Colors.white,
               tooltip: 'Get Hint for 5 Credits',
               onPressed: () {},
             ),
             IconButton(
               icon: Icon(Icons.image),
-              color: Colors.black,
+              color: Colors.white,
               tooltip: 'Open Image Clue',
               onPressed: () => _startShowImageClue(context),
             ),
             IconButton(
               icon: Icon(Icons.vpn_key),
-              color: Colors.black,
+              color: Colors.white,
               tooltip: 'Solve this Level',
               onPressed: () => _solveLevel(context),
             ),
