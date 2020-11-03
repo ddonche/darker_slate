@@ -116,13 +116,29 @@ class _LevelScreenState extends State<LevelScreen> {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text(
-              'Hints (1 of 3): \nChange your perspective on the issue.',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
+          Card(
+            elevation: 5,
+            margin: EdgeInsets.symmetric(vertical: 12, horizontal: 14),
+            child: ListTile(
+              leading: CircleAvatar(
+                radius: 30,
+                backgroundColor: Colors.blueGrey,
+                child: Padding(
+                  padding: EdgeInsets.all(6),
+                  child: FittedBox(
+                    child: Text('1 of 3'),
+                  ),
+                ),
+              ),
+              title: Text('Hint:',
+                  style: Theme.of(context).textTheme.headline6),
+              subtitle: Text(
+                'Change your perspective on the issue.',
+              ),
+              trailing: IconButton(
+                icon: Icon(Icons.live_help),
                 color: Colors.red[900],
+                onPressed: () {},
               ),
             ),
           ),
