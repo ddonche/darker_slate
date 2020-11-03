@@ -112,7 +112,7 @@ class _LevelScreenState extends State<LevelScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text('Chapter 17'),
+        title: const Text('DS Chapter 17'),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.chat),
@@ -146,7 +146,7 @@ class _LevelScreenState extends State<LevelScreen> {
                           shape: CircleBorder(),
                         ),
                         child: IconButton(
-                          icon: Icon(Icons.mood),
+                          icon: Icon(Icons.star),
                           color: Colors.white,
                           onPressed: () {},
                         ),
@@ -175,11 +175,11 @@ class _LevelScreenState extends State<LevelScreen> {
                     children: <Widget>[
                       Ink(
                         decoration: const ShapeDecoration(
-                          color: Colors.black,
+                          color: Colors.orange,
                           shape: CircleBorder(),
                         ),
                         child: IconButton(
-                          icon: Icon(Icons.analytics),
+                          icon: Icon(Icons.local_fire_department),
                           color: Colors.white,
                           onPressed: () {},
                         ),
@@ -209,7 +209,7 @@ class _LevelScreenState extends State<LevelScreen> {
                           shape: CircleBorder(),
                         ),
                         child: IconButton(
-                          icon: Icon(Icons.mood_bad),
+                          icon: Icon(Icons.star_outline),
                           color: Colors.white,
                           onPressed: () {},
                         ),
@@ -254,7 +254,7 @@ class _LevelScreenState extends State<LevelScreen> {
               vertical: 18.0,
               horizontal: 40,
             ),
-            child: Text(
+            child: SelectableText(
               'Ballast Barbary Coast red ensign aye rope end transom Plate Fleet mizzenmast chase guns barkadeer. Red ensign Chain Shot league scourge of the seven seas ye chase rope end hempen halter list hearties. Draught warp American Main gibbet careen galleon shrouds fire in the hole prow strike colors. \n\nMizzenmast execution dock strike colors long boat mutiny interloper prow lugger maroon hail-shot. Cat o\'nine tails Arr to go on account long boat yardarm doubloon Sink me belay tackle black jack. Yellow Jack squiffy blow the man down fire in the hole stern hands fathom gun bring a spring upon her cable yo-ho-ho. \n\nAhoy yardarm nipperkin sutler quarterdeck bilge rat strike colors lad coxswain hail-shot. Brethren of the Coast scourge of the seven seas fathom gun yo-ho-ho ho marooned no prey, no pay hornswaggle bowsprit. Sheet handsomely belay marooned parley weigh anchor scurvy prow pirate hempen halter.',
               style: TextStyle(
                 fontFamily: 'Vollkorn',
