@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -17,6 +18,7 @@ class RegistrationScreen extends StatefulWidget {
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   final _auth = FirebaseAuth.instance;
   bool showSpinner = false;
   String email;
@@ -27,6 +29,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       // backgroundColor: Colors.blueGrey[400],
       body: ModalProgressHUD(
         inAsyncCall: showSpinner,
@@ -143,8 +146,28 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                   'email': email,
                                   'userLevel': userLevel,
                                 });
+                              } on PlatformException catch (e) {
+                                var message =
+                                    'An error occurred, please check your credentials!';
+
+                                if (e.message != null) {
+                                  message = e.message;
+                                  setState(() {
+                                    showSpinner = false;
+                                  });
+                                }
+                                _scaffoldKey.currentState.showSnackBar(SnackBar(
+                                  content: Text(message),
+                                  duration: Duration(seconds: 3),
+                                ));
+                                setState(() {
+                                  showSpinner = false;
+                                });
                               } catch (e) {
                                 print(e);
+                                setState(() {
+                                  showSpinner = false;
+                                });
                               }
                             },
                           ),

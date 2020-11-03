@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import '../widgets/drawer.dart';
 import 'welcome_screen.dart';
 
@@ -285,10 +287,65 @@ class _LevelScreenState extends State<LevelScreen> {
               subtitle: Text(
                 'Change your perspective on the issue.',
               ),
-              trailing: IconButton(
-                icon: Icon(Icons.live_help),
-                color: Colors.red[900],
-                onPressed: () {},
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  IconButton(
+                    padding: EdgeInsets.all(2),
+                    constraints: BoxConstraints(),
+                    icon: Icon(Icons.help_center),
+                    color: Colors.red[900],
+                    onPressed: () {},
+                    tooltip: 'Get Hint for 5 Credits',
+                  ), // icon-1
+                  IconButton(
+                    padding: EdgeInsets.all(2),
+                    constraints: BoxConstraints(),
+                    icon: Icon(Icons.double_arrow),
+                    color: Colors.red[900],
+                    onPressed: () {},
+                    tooltip: 'Skip Level for 50 Credits',
+                  ), // icon-2
+                ],
+              ),
+            ),
+          ),
+          Card(
+            elevation: 5,
+            margin: EdgeInsets.symmetric(vertical: 12, horizontal: 30),
+            child: ListTile(
+              leading: Text(
+                '2',
+                style: TextStyle(
+                    fontSize: 38,
+                    fontWeight: FontWeight.w900,
+                    color: Colors.red[900]),
+              ),
+              title:
+              Text('Hint:', style: Theme.of(context).textTheme.headline6),
+              subtitle: Text(
+                'Have you ever heard of a place called Suoods?',
+              ),
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  IconButton(
+                    padding: EdgeInsets.all(2),
+                    constraints: BoxConstraints(),
+                    icon: Icon(Icons.help_center),
+                    color: Colors.red[900],
+                    onPressed: () {},
+                    tooltip: 'Get Hint for 5 Credits',
+                  ), // icon-1
+                  IconButton(
+                    padding: EdgeInsets.all(2),
+                    constraints: BoxConstraints(),
+                    icon: Icon(Icons.double_arrow),
+                    color: Colors.red[900],
+                    onPressed: () {},
+                    tooltip: 'Skip Level for 50 Credits',
+                  ), // icon-2
+                ],
               ),
             ),
           ),
@@ -322,8 +379,11 @@ class _LevelScreenState extends State<LevelScreen> {
                     onPressed: () => _startAddNewNote(context),
                   ),
                   Text(
-                    'Add a New Note',
-                    style: TextStyle(color: Colors.white, fontSize: 12,),
+                    'New Note',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 12,
+                    ),
                   ),
                 ],
               ),
@@ -338,8 +398,11 @@ class _LevelScreenState extends State<LevelScreen> {
                     onPressed: () => _startShowImageClue(context),
                   ),
                   Text(
-                    'Open Image Clue',
-                    style: TextStyle(color: Colors.white, fontSize: 12,),
+                    'Show Puzzle',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 12,
+                    ),
                   ),
                 ],
               ),
