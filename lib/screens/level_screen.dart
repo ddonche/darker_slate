@@ -120,7 +120,7 @@ class _LevelScreenState extends State<LevelScreen> {
             onPressed: () {},
           ),
           IconButton(
-            icon: const Icon(Icons.close),
+            icon: const Icon(Icons.exit_to_app),
             tooltip: 'Log Out',
             onPressed: () {
               _auth.signOut();
@@ -219,7 +219,10 @@ class _LevelScreenState extends State<LevelScreen> {
                         child: Text(
                           '3976',
                           style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold, color: Colors.red,),
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.red,
+                          ),
                         ),
                       ),
                       Text(
@@ -289,39 +292,59 @@ class _LevelScreenState extends State<LevelScreen> {
               ),
             ),
           ),
+          SizedBox(height: 36),
         ]),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.black,
+        child: Icon(Icons.vpn_key),
+        tooltip: 'Solve this Level',
+        onPressed: () => _solveLevel(context),
       ),
       bottomNavigationBar: BottomAppBar(
         color: Colors.blueGrey,
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            IconButton(
-              icon: Icon(Icons.note_add),
-              color: Colors.white,
-              tooltip: 'Add Note',
-              onPressed: () => _startAddNewNote(context),
-            ),
-            IconButton(
-              icon: Icon(Icons.live_help),
-              color: Colors.white,
-              tooltip: 'Get Hint for 5 Credits',
-              onPressed: () {},
-            ),
-            IconButton(
-              icon: Icon(Icons.image),
-              color: Colors.white,
-              tooltip: 'Open Image Clue',
-              onPressed: () => _startShowImageClue(context),
-            ),
-            IconButton(
-              icon: Icon(Icons.vpn_key),
-              color: Colors.white,
-              tooltip: 'Solve this Level',
-              onPressed: () => _solveLevel(context),
-            ),
-          ],
+        shape: CircularNotchedRectangle(),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    padding: EdgeInsets.all(2),
+                    constraints: BoxConstraints(),
+                    icon: Icon(Icons.note_add),
+                    color: Colors.white,
+                    onPressed: () => _startAddNewNote(context),
+                  ),
+                  Text(
+                    'Add a New Note',
+                    style: TextStyle(color: Colors.white, fontSize: 12,),
+                  ),
+                ],
+              ),
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    padding: EdgeInsets.all(2),
+                    constraints: BoxConstraints(),
+                    icon: Icon(Icons.image),
+                    color: Colors.white,
+                    onPressed: () => _startShowImageClue(context),
+                  ),
+                  Text(
+                    'Open Image Clue',
+                    style: TextStyle(color: Colors.white, fontSize: 12,),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
       drawer: AppDrawer(),
