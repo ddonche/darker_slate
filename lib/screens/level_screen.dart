@@ -25,12 +25,33 @@ class _LevelScreenState extends State<LevelScreen> {
     getCurrentUser();
   }
 
+  var userCurrentLevel;
+  var currentLevelText;
+  var currentLevelTitle;
+
   void getCurrentUser() async {
     try {
-      final user = await _auth.currentUser;
+      final user = _auth.currentUser;
       if (user != null) {
         loggedInUser = user;
-        // print(loggedInUser.email);
+        print(loggedInUser.email);
+
+        // obtain users's current level
+        DocumentSnapshot ds = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(loggedInUser.uid)
+            .get();
+        userCurrentLevel = ds['userLevel'].toString();
+        print(userCurrentLevel);
+
+        // obtain current level text
+        DocumentSnapshot ds2 = await FirebaseFirestore.instance
+            .collection('levels')
+            .doc(userCurrentLevel)
+            .get();
+        currentLevelText = ds2['text'];
+        currentLevelTitle = ds2['title'];
+        print(currentLevelTitle);
       }
     } catch (e) {
       print(e);
@@ -114,7 +135,7 @@ class _LevelScreenState extends State<LevelScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text('DS Chapter 17'),
+        title: Text(currentLevelTitle.toString()),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.chat),
@@ -246,7 +267,7 @@ class _LevelScreenState extends State<LevelScreen> {
           Padding(
             padding: const EdgeInsets.all(8),
             child: Text(
-              'Chapter 17',
+              currentLevelTitle.toString(),
               style: TextStyle(
                 fontFamily: 'Vollkorn',
                 fontSize: 24,
@@ -260,7 +281,8 @@ class _LevelScreenState extends State<LevelScreen> {
               horizontal: 40,
             ),
             child: SelectableText(
-              'Ballast Barbary Coast red ensign aye rope end transom Plate Fleet mizzenmast chase guns barkadeer. Red ensign Chain Shot league scourge of the seven seas ye chase rope end hempen halter list hearties. Draught warp American Main gibbet careen galleon shrouds fire in the hole prow strike colors. \n\nMizzenmast execution dock strike colors long boat mutiny interloper prow lugger maroon hail-shot. Cat o\'nine tails Arr to go on account long boat yardarm doubloon Sink me belay tackle black jack. Yellow Jack squiffy blow the man down fire in the hole stern hands fathom gun bring a spring upon her cable yo-ho-ho. \n\nAhoy yardarm nipperkin sutler quarterdeck bilge rat strike colors lad coxswain hail-shot. Brethren of the Coast scourge of the seven seas fathom gun yo-ho-ho ho marooned no prey, no pay hornswaggle bowsprit. Sheet handsomely belay marooned parley weigh anchor scurvy prow pirate hempen halter.',
+              //'Ballast Barbary Coast red ensign aye rope end transom Plate Fleet mizzenmast chase guns barkadeer. Red ensign Chain Shot league scourge of the seven seas ye chase rope end hempen halter list hearties. Draught warp American Main gibbet careen galleon shrouds fire in the hole prow strike colors. \n\nMizzenmast execution dock strike colors long boat mutiny interloper prow lugger maroon hail-shot. Cat o\'nine tails Arr to go on account long boat yardarm doubloon Sink me belay tackle black jack. Yellow Jack squiffy blow the man down fire in the hole stern hands fathom gun bring a spring upon her cable yo-ho-ho. \n\nAhoy yardarm nipperkin sutler quarterdeck bilge rat strike colors lad coxswain hail-shot. Brethren of the Coast scourge of the seven seas fathom gun yo-ho-ho ho marooned no prey, no pay hornswaggle bowsprit. Sheet handsomely belay marooned parley weigh anchor scurvy prow pirate hempen halter.',
+              currentLevelText.toString(),
               style: TextStyle(
                 fontFamily: 'Vollkorn',
                 fontSize: 18,
@@ -322,7 +344,7 @@ class _LevelScreenState extends State<LevelScreen> {
                     color: Colors.red[900]),
               ),
               title:
-              Text('Hint:', style: Theme.of(context).textTheme.headline6),
+                  Text('Hint:', style: Theme.of(context).textTheme.headline6),
               subtitle: Text(
                 'Have you ever heard of a place called Suoods?',
               ),

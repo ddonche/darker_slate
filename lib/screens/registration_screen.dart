@@ -146,6 +146,15 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                   'email': email,
                                   'userLevel': userLevel,
                                 });
+                                FirebaseFirestore.instance
+                                    .collection('notes')
+                                    .doc(newUser.user.uid)
+                                    .collection('usernotes')
+                                    .doc('first note')
+                                    .set({
+                                  'title': 'my first field note',
+                                  'text': 'You can add field notes to help you organize ideas or remember things.',
+                                });
                               } on PlatformException catch (e) {
                                 var message =
                                     'An error occurred, please check your credentials!';
