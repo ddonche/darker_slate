@@ -66,7 +66,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       keyboardType: TextInputType.emailAddress,
                       textAlign: TextAlign.center,
                       onChanged: (value) {
-                        email = value;
+                        email = value.trim();
                       },
                       decoration: kTextFieldDecoration.copyWith(
                           prefixIcon: Icon(Icons.email),
@@ -78,7 +78,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     TextField(
                       textAlign: TextAlign.center,
                       onChanged: (value) {
-                        username = value;
+                        username = value.trim();
                       },
                       decoration: kTextFieldDecoration.copyWith(
                           prefixIcon: Icon(Icons.account_circle),
@@ -91,7 +91,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       obscureText: true,
                       textAlign: TextAlign.center,
                       onChanged: (value) {
-                        password = value;
+                        password = value.trim();
                       },
                       decoration: kTextFieldDecoration.copyWith(
                           hintText: 'Enter your password'),
