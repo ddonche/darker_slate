@@ -39,7 +39,7 @@ class _LevelScreenState extends State<LevelScreen> {
         // obtain users's current level
         DocumentSnapshot ds = await FirebaseFirestore.instance
             .collection('users')
-            .doc(loggedInUser.uid)
+            .doc(_auth.currentUser.uid)
             .get();
         userCurrentLevel = ds['userLevel'].toString();
         print(userCurrentLevel);
