@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'welcome_screen.dart';
+import '../services/notes.dart';
 
 class NoteScreen extends StatefulWidget {
   static const String id = 'note_screen';
@@ -52,48 +53,14 @@ class _NoteScreenState extends State<NoteScreen> {
           ),
         ],
       ),
-      body: StreamBuilder(
-        stream: FirebaseFirestore.instance
-            .collection('notes')
-            .doc(_auth.currentUser.uid)
-            .collection('usernotes')
-            .snapshots(),
-        builder: (ctx, streamSnapShot) {
-          if (!streamSnapShot.hasData) return const Text('Loading...');
-          if (streamSnapShot.connectionState == ConnectionState.waiting) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          final noteData = streamSnapShot.data.docs;
-          return ListView.builder(
-            itemCount: noteData.length,
-            itemBuilder: (ctx, index) => Container(
-              padding: EdgeInsets.all(10),
-              child: Card(
-                elevation: 5,
-                margin: EdgeInsets.symmetric(horizontal: 5),
-                child: ListTile(
-                  leading: IconButton(
-                    icon: Icon(Icons.launch),
-                    color: Colors.blueGrey,
-                    onPressed: () {},
-                  ),
-                  title: Text(noteData[index]['title'],
-                      style: Theme.of(context).textTheme.headline6),
-                  subtitle: Text(noteData[index]['text'],
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,),
-                  trailing: IconButton(
-                    icon: Icon(Icons.delete),
-                    color: Theme.of(context).errorColor,
-                    onPressed: () {},
-                  ),
-                ),
-              ),
+      body: Container(
+        child: Column(
+          children: [
+            Expanded(
+              child: Notes(),
             ),
-          );
-        },
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),

@@ -28,6 +28,8 @@ class _LevelScreenState extends State<LevelScreen> {
   var userCurrentLevel;
   var currentLevelText;
   var currentLevelTitle;
+  int currentLevelSolves;
+  int currentLevelFails;
 
   void getCurrentUser() async {
     try {
@@ -51,6 +53,8 @@ class _LevelScreenState extends State<LevelScreen> {
             .get();
         currentLevelText = ds2['text'];
         currentLevelTitle = ds2['title'];
+        currentLevelSolves = ds2['solves'];
+        currentLevelFails = ds2['fails'];
         print(currentLevelTitle);
       }
     } catch (e) {
@@ -177,7 +181,7 @@ class _LevelScreenState extends State<LevelScreen> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          '476',
+                          currentLevelSolves.toString(),
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
@@ -240,7 +244,7 @@ class _LevelScreenState extends State<LevelScreen> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          '3976',
+                          currentLevelFails.toString(),
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
@@ -305,7 +309,7 @@ class _LevelScreenState extends State<LevelScreen> {
                     color: Colors.red[900]),
               ),
               title:
-                  Text('Hint:', style: Theme.of(context).textTheme.headline6),
+              Text('Hint:', style: Theme.of(context).textTheme.headline6),
               subtitle: Text(
                 'Change your perspective on the issue.',
               ),
@@ -344,7 +348,7 @@ class _LevelScreenState extends State<LevelScreen> {
                     color: Colors.red[900]),
               ),
               title:
-                  Text('Hint:', style: Theme.of(context).textTheme.headline6),
+              Text('Hint:', style: Theme.of(context).textTheme.headline6),
               subtitle: Text(
                 'Have you ever heard of a place called Suoods?',
               ),
