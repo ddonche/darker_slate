@@ -12,6 +12,8 @@ import '../widgets/rounded_button.dart';
 import '../widgets/auth_form.dart';
 
 class RegistrationScreen extends StatefulWidget {
+  static const String id = 'registration_screen';
+
   @override
   _RegistrationScreenState createState() => _RegistrationScreenState();
 }
