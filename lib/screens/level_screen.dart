@@ -43,7 +43,7 @@ class _LevelScreenState extends State<LevelScreen> {
             .collection('users')
             .doc(_auth.currentUser.uid)
             .get();
-        userCurrentLevel = ds['userLevel'].toString();
+        userCurrentLevel = ds['userlevel'].toString();
         print(userCurrentLevel);
 
         // obtain current level text

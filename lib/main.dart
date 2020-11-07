@@ -31,7 +31,6 @@ class DarkerSlate extends StatelessWidget {
       initialRoute: WelcomeScreen.id,
       routes: {
         LevelScreen.id : (context) => LevelScreen(),
-        LoginScreen.id : (context) => LoginScreen(),
         NoteScreen.id : (context) => NoteScreen(),
         RegistrationScreen.id : (context) => RegistrationScreen(),
         WelcomeScreen.id : (context) => WelcomeScreen(),

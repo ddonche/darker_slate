@@ -37,7 +37,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     tag: 'logo',
                     child: Container(
                       child: Image.asset('assets/images/logo.png'),
-                      height: 190,
+                      height: 60,
                       padding: EdgeInsets.symmetric(horizontal: 8),
                     ),
                   ),
@@ -61,7 +61,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 ],
               ),
               SizedBox(
-                height: 20.0,
+                height: 80.0,
               ),
               FractionallySizedBox(
                 widthFactor: 0.5,
@@ -73,15 +73,17 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   },
                 ),
               ),
-              SizedBox(
-                  height: 100),
-              Container(
-                child: Text(
-                  'A game of intrigue and conspiracy.\nCan you solve the mysteries of Darker Slate?',
-                  style: TextStyle(color: Colors.white, fontSize: 20,),
+              SizedBox(height: 8),
+              Column(children: <Widget>[
+                Text(
+                  'A game of intrigue and conspiracy.',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                  ),
                   textAlign: TextAlign.center,
                 ),
-              ),
+              ]),
             ],
           ),
         ),
