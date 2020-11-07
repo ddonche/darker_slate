@@ -30,19 +30,20 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Hero(
                     tag: 'logo',
                     child: Container(
                       child: Image.asset('assets/images/logo.png'),
-                      height: 60,
+                      height: 190,
                       padding: EdgeInsets.symmetric(horizontal: 8),
                     ),
                   ),
-                  TypewriterAnimatedTextKit(
+                  TyperAnimatedTextKit(
                     text: ['Darker Slate'],
+                    textAlign: TextAlign.start,
                     textStyle: TextStyle(
                       shadows: [
                         Shadow(
@@ -62,12 +63,25 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               SizedBox(
                 height: 20.0,
               ),
-              RoundedButton(title: 'Login', colour: Colors.blueGrey, onPressed: () {
-                Navigator.pushNamed(context, LoginScreen.id);
-              },),
-              RoundedButton(title: 'Register', colour: Colors.red[900], onPressed: () {
-                Navigator.pushNamed(context, RegistrationScreen.id);
-              },),
+              FractionallySizedBox(
+                widthFactor: 0.5,
+                child: RoundedButton(
+                  title: 'Play the Game',
+                  colour: Colors.red[900],
+                  onPressed: () {
+                    Navigator.pushNamed(context, RegistrationScreen.id);
+                  },
+                ),
+              ),
+              SizedBox(
+                  height: 100),
+              Container(
+                child: Text(
+                  'A game of intrigue and conspiracy.\nCan you solve the mysteries of Darker Slate?',
+                  style: TextStyle(color: Colors.white, fontSize: 20,),
+                  textAlign: TextAlign.center,
+                ),
+              ),
             ],
           ),
         ),

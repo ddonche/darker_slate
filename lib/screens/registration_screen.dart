@@ -1,14 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:flutter/services.dart';
 
-import '../constants.dart';
-import 'level_screen.dart';
-import 'login_screen.dart';
 import '../screens/welcome_screen.dart';
-import '../widgets/rounded_button.dart';
 import '../widgets/auth_form.dart';
 
 class RegistrationScreen extends StatefulWidget {
@@ -20,11 +14,40 @@ class RegistrationScreen extends StatefulWidget {
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
   final _auth = FirebaseAuth.instance;
-  bool showSpinner = false;
-  String email;
-  String username;
-  String password;
-  int userLevel = 1;
+
+  void _submitAuthForm(
+    String email,
+    String password,
+    String userName,
+    bool isLogin,
+    BuildContext ctx,
+  ) async {
+    UserCredential authResult;
+    try {
+      if (isLogin) {
+        authResult = await _auth.signInWithEmailAndPassword(
+            email: email, password: password);
+      } else {
+        authResult = await _auth.createUserWithEmailAndPassword(
+            email: email, password: password);
+      }
+    } on PlatformException catch (err) {
+      var message = 'An error occurred, please check your credentials!';
+
+      if (err.message != null) {
+        message = err.message;
+      }
+
+      Scaffold.of(ctx).showSnackBar(
+        SnackBar(
+          content: Text(message),
+          backgroundColor: Theme.of(ctx).errorColor,
+        ),
+      );
+    } catch (err) {
+      print(err);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +81,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   SizedBox(
                     height: 28.0,
                   ),
-                  AuthForm(),
+                  AuthForm(
+                    _submitAuthForm,
+                  ),
                 ],
               ),
             ),
