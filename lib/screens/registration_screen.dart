@@ -17,13 +17,14 @@ class RegistrationScreen extends StatefulWidget {
 class _RegistrationScreenState extends State<RegistrationScreen> {
   final _auth = FirebaseAuth.instance;
   var _isLoading = false;
+  String _error;
 
   void _submitAuthForm(
     String email,
     String password,
     String userName,
     bool isLogin,
-    BuildContext ctx,
+    // BuildContext ctx,
   ) async {
     UserCredential authResult;
     try {
@@ -69,12 +70,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         message = err.message;
       }
 
-      Scaffold.of(ctx).showSnackBar(
-        SnackBar(
-          content: Text(message),
-          backgroundColor: Theme.of(ctx).errorColor,
-        ),
-      );
       setState(() {
         _isLoading = false;
       });
@@ -82,8 +77,38 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       print(err);
       setState(() {
         _isLoading = false;
+        _error = err.message;
       });
     }
+  }
+
+  Widget showAlert() {
+    if (_error != null) {
+      return Container(
+        color: Colors.amber,
+        width: double.infinity,
+        padding: EdgeInsets.all(8),
+        child: Row(children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(right: 12.0),
+            child: Icon(Icons.error_outline),
+          ),
+          Expanded(child: Text(_error, maxLines: 3,),),
+          Padding(
+            padding: const EdgeInsets.only(left: 12.0),
+            child: IconButton(
+              icon: Icon(Icons.close),
+              onPressed: () {
+                setState(() {
+                  _error = null;
+                });
+              },
+            ),
+          ),
+        ],),
+      );
+    }
+    return SizedBox(height: 0);
   }
 
   @override
@@ -104,6 +129,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
+                  showAlert(),
                   Hero(
                     tag: 'logo',
                     child: Container(

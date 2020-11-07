@@ -15,7 +15,6 @@ class AuthForm extends StatefulWidget {
     String password,
     String userName,
     bool isLogin,
-    BuildContext ctx,
   ) submitFn;
 
   @override
@@ -36,7 +35,7 @@ class _AuthFormState extends State<AuthForm> {
     if (isValid) {
       _formKey.currentState.save();
       widget.submitFn(_userEmail.trim(), _userPassword.trim(), _userName.trim(),
-          _isLogin, context);
+          _isLogin);
     }
   }
 
@@ -81,6 +80,9 @@ class _AuthFormState extends State<AuthForm> {
                       validator: (value) {
                         if (value.isEmpty || value.length < 4) {
                           return 'Please enter at least 4 characters.';
+                        }
+                        if (value.length > 24) {
+                          return 'Username must be less than 25 characters.';
                         }
                         return null;
                       },
