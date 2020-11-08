@@ -62,12 +62,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               'This will help you keep track of important clues and other things you wish to save for later.',
         });
       }
-
     } on PlatformException catch (err) {
-      var message = 'An error occurred, please check your credentials!';
+      //var message = 'An error occurred, please check your credentials!';
 
       if (err.message != null) {
-        message = err.message;
+        _error = err.message;
       }
 
       setState(() {
@@ -87,25 +86,32 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       return Container(
         color: Colors.amber,
         width: double.infinity,
-        padding: EdgeInsets.all(8),
-        child: Row(children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(right: 12.0),
-            child: Icon(Icons.error_outline),
-          ),
-          Expanded(child: Text(_error, maxLines: 3,),),
-          Padding(
-            padding: const EdgeInsets.only(left: 12.0),
-            child: IconButton(
-              icon: Icon(Icons.close),
-              onPressed: () {
-                setState(() {
-                  _error = null;
-                });
-              },
+        padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+        child: Row(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(right: 22.0),
+              child: Icon(Icons.warning),
             ),
-          ),
-        ],),
+            Expanded(
+              child: Text(
+                _error,
+                maxLines: 3,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 12.0),
+              child: IconButton(
+                icon: Icon(Icons.cancel),
+                onPressed: () {
+                  setState(() {
+                    _error = null;
+                  });
+                },
+              ),
+            ),
+          ],
+        ),
       );
     }
     return SizedBox(height: 0);
@@ -142,7 +148,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: 28.0,
+                    height: 18.0,
                   ),
                   AuthForm(
                     _submitAuthForm,

@@ -94,9 +94,10 @@ class _AuthFormState extends State<AuthForm> {
                         _userName = value;
                       },
                     ),
-                  SizedBox(
-                    height: 12.0,
-                  ),
+                  if (!_isLogin)
+                    SizedBox(
+                      height: 12.0,
+                    ),
                   TextFormField(
                     key: ValueKey('password'),
                     validator: (value) {
