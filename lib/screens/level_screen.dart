@@ -6,8 +6,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../widgets/drawer.dart';
 import 'welcome_screen.dart';
 
-// import '../widgets/rounded_button.dart';
-
 class LevelScreen extends StatefulWidget {
   static const String id = 'level_screen';
 
@@ -16,6 +14,7 @@ class LevelScreen extends StatefulWidget {
 }
 
 class _LevelScreenState extends State<LevelScreen> {
+  final _firestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
   User loggedInUser;
 
@@ -25,37 +24,12 @@ class _LevelScreenState extends State<LevelScreen> {
     getCurrentUser();
   }
 
-  var userCurrentLevel;
-  var currentLevelText;
-  var currentLevelTitle;
-  int currentLevelSolves;
-  int currentLevelFails;
-
   void getCurrentUser() async {
     try {
       final user = _auth.currentUser;
       if (user != null) {
         loggedInUser = user;
         print(loggedInUser.email);
-
-        // obtain users's current level
-        DocumentSnapshot ds = await FirebaseFirestore.instance
-            .collection('users')
-            .doc(_auth.currentUser.uid)
-            .get();
-        userCurrentLevel = ds['userlevel'].toString();
-        print(userCurrentLevel);
-
-        // obtain current level text
-        DocumentSnapshot ds2 = await FirebaseFirestore.instance
-            .collection('levels')
-            .doc(userCurrentLevel)
-            .get();
-        currentLevelText = ds2['text'];
-        currentLevelTitle = ds2['title'];
-        currentLevelSolves = ds2['solves'];
-        currentLevelFails = ds2['fails'];
-        print(currentLevelTitle);
       }
     } catch (e) {
       print(e);
@@ -139,7 +113,7 @@ class _LevelScreenState extends State<LevelScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text(currentLevelTitle.toString()),
+        title: Text('Darker Slate'),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.chat),
@@ -156,228 +130,266 @@ class _LevelScreenState extends State<LevelScreen> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Column(children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(12),
-            child: Container(
-              height: 100,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Column(
-                    children: <Widget>[
-                      Ink(
-                        decoration: const ShapeDecoration(
-                          color: Colors.green,
-                          shape: CircleBorder(),
-                        ),
-                        child: IconButton(
-                          icon: Icon(Icons.star),
-                          color: Colors.white,
-                          onPressed: () {},
-                        ),
+      body: StreamBuilder<DocumentSnapshot>(
+          stream: _firestore
+              .collection('users')
+              .doc(_auth.currentUser.uid)
+              .snapshots(),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return Center(
+                child: CircularProgressIndicator(
+                  backgroundColor: Colors.red[900],
+                ),
+              );
+            }
+            return StreamBuilder<DocumentSnapshot>(
+                stream: _firestore
+                    .collection('levels')
+                    .doc(snapshot.data['userlevel'].toString())
+                    .snapshots(),
+                builder: (context, snapshot2) {
+                  if (!snapshot2.hasData) {
+                    return Center(
+                      child: CircularProgressIndicator(
+                        backgroundColor: Colors.red[900],
                       ),
+                    );
+                  }
+                  var difficulty = (snapshot2.data['fails'].toDouble() / snapshot2.data['solves'].toDouble());
+                  return SingleChildScrollView(
+                    child: Column(children: <Widget>[
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          currentLevelSolves.toString(),
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.green,
+                        padding: const EdgeInsets.all(14),
+                        child: Container(
+                          //color: Colors.black,
+                          height: 110,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 8),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: <Widget>[
+                                Column(
+                                  children: <Widget>[
+                                    Ink(
+                                      decoration: const ShapeDecoration(
+                                        color: Colors.green,
+                                        shape: CircleBorder(),
+                                      ),
+                                      child: IconButton(
+                                        icon: Icon(Icons.star),
+                                        color: Colors.white,
+                                        onPressed: () {},
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        snapshot2.data['solves'].toString(),
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.green,
+                                        ),
+                                      ),
+                                    ),
+                                    Text(
+                                      'solves',
+                                      style: TextStyle(
+                                        fontSize: 10,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                VerticalDivider(),
+                                Column(
+                                  children: <Widget>[
+                                    Ink(
+                                      decoration: const ShapeDecoration(
+                                        color: Colors.orange,
+                                        shape: CircleBorder(),
+                                      ),
+                                      child: IconButton(
+                                        icon: Icon(Icons.local_fire_department),
+                                        color: Colors.white,
+                                        onPressed: () {},
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        difficulty.toStringAsFixed(1),
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.orange,
+                                        ),
+                                      ),
+                                    ),
+                                    Text(
+                                      'difficulty rating',
+                                      style: TextStyle(
+                                        fontSize: 10,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                VerticalDivider(),
+                                Column(
+                                  children: <Widget>[
+                                    Ink(
+                                      decoration: const ShapeDecoration(
+                                        color: Colors.red,
+                                        shape: CircleBorder(),
+                                      ),
+                                      child: IconButton(
+                                        icon: Icon(Icons.star_outline),
+                                        color: Colors.white,
+                                        onPressed: () {},
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        snapshot2.data['fails'].toString(),
+                                        //currentLevelFails.toString(),
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.red,
+                                        ),
+                                      ),
+                                    ),
+                                    Text(
+                                      'fails',
+                                      style: TextStyle(
+                                        fontSize: 10,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                      Text(
-                        'solves',
-                        style: TextStyle(
-                          fontSize: 10,
-                        ),
-                      ),
-                    ],
-                  ),
-                  VerticalDivider(),
-                  Column(
-                    children: <Widget>[
-                      Ink(
-                        decoration: const ShapeDecoration(
-                          color: Colors.orange,
-                          shape: CircleBorder(),
-                        ),
-                        child: IconButton(
-                          icon: Icon(Icons.local_fire_department),
-                          color: Colors.white,
-                          onPressed: () {},
-                        ),
+                      Divider(
+                        indent: 20,
+                        endIndent: 20,
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(8),
                         child: Text(
-                          '8.3',
+                          snapshot2.data['title'].toString(),
                           style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      Text(
-                        'difficulty rating',
-                        style: TextStyle(
-                          fontSize: 10,
-                        ),
-                      ),
-                    ],
-                  ),
-                  VerticalDivider(),
-                  Column(
-                    children: <Widget>[
-                      Ink(
-                        decoration: const ShapeDecoration(
-                          color: Colors.red,
-                          shape: CircleBorder(),
-                        ),
-                        child: IconButton(
-                          icon: Icon(Icons.star_outline),
-                          color: Colors.white,
-                          onPressed: () {},
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          currentLevelFails.toString(),
-                          style: TextStyle(
-                            fontSize: 16,
+                            fontFamily: 'Vollkorn',
+                            fontSize: 24,
                             fontWeight: FontWeight.bold,
-                            color: Colors.red,
                           ),
                         ),
                       ),
-                      Text(
-                        'fails',
-                        style: TextStyle(
-                          fontSize: 10,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 18.0,
+                          horizontal: 40,
+                        ),
+                        child: SelectableText(
+                          snapshot2.data['text'].toString(),
+                          style: TextStyle(
+                            fontFamily: 'Vollkorn',
+                            fontSize: 18,
+                          ),
                         ),
                       ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Divider(
-            indent: 20,
-            endIndent: 20,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8),
-            child: Text(
-              currentLevelTitle.toString(),
-              style: TextStyle(
-                fontFamily: 'Vollkorn',
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              vertical: 18.0,
-              horizontal: 40,
-            ),
-            child: SelectableText(
-              //'Ballast Barbary Coast red ensign aye rope end transom Plate Fleet mizzenmast chase guns barkadeer. Red ensign Chain Shot league scourge of the seven seas ye chase rope end hempen halter list hearties. Draught warp American Main gibbet careen galleon shrouds fire in the hole prow strike colors. \n\nMizzenmast execution dock strike colors long boat mutiny interloper prow lugger maroon hail-shot. Cat o\'nine tails Arr to go on account long boat yardarm doubloon Sink me belay tackle black jack. Yellow Jack squiffy blow the man down fire in the hole stern hands fathom gun bring a spring upon her cable yo-ho-ho. \n\nAhoy yardarm nipperkin sutler quarterdeck bilge rat strike colors lad coxswain hail-shot. Brethren of the Coast scourge of the seven seas fathom gun yo-ho-ho ho marooned no prey, no pay hornswaggle bowsprit. Sheet handsomely belay marooned parley weigh anchor scurvy prow pirate hempen halter.',
-              currentLevelText.toString(),
-              style: TextStyle(
-                fontFamily: 'Vollkorn',
-                fontSize: 18,
-              ),
-            ),
-          ),
-          Divider(
-            indent: 20,
-            endIndent: 20,
-          ),
-          Card(
-            elevation: 5,
-            margin: EdgeInsets.symmetric(vertical: 12, horizontal: 30),
-            child: ListTile(
-              leading: Text(
-                '1',
-                style: TextStyle(
-                    fontSize: 38,
-                    fontWeight: FontWeight.w900,
-                    color: Colors.red[900]),
-              ),
-              title:
-              Text('Hint:', style: Theme.of(context).textTheme.headline6),
-              subtitle: Text(
-                'Change your perspective on the issue.',
-              ),
-              trailing: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  IconButton(
-                    padding: EdgeInsets.all(2),
-                    constraints: BoxConstraints(),
-                    icon: Icon(Icons.help_center),
-                    color: Colors.red[900],
-                    onPressed: () {},
-                    tooltip: 'Get Hint for 5 Credits',
-                  ), // icon-1
-                  IconButton(
-                    padding: EdgeInsets.all(2),
-                    constraints: BoxConstraints(),
-                    icon: Icon(Icons.double_arrow),
-                    color: Colors.red[900],
-                    onPressed: () {},
-                    tooltip: 'Skip Level for 50 Credits',
-                  ), // icon-2
-                ],
-              ),
-            ),
-          ),
-          Card(
-            elevation: 5,
-            margin: EdgeInsets.symmetric(vertical: 12, horizontal: 30),
-            child: ListTile(
-              leading: Text(
-                '2',
-                style: TextStyle(
-                    fontSize: 38,
-                    fontWeight: FontWeight.w900,
-                    color: Colors.red[900]),
-              ),
-              title:
-              Text('Hint:', style: Theme.of(context).textTheme.headline6),
-              subtitle: Text(
-                'Have you ever heard of a place called Suoods?',
-              ),
-              trailing: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  IconButton(
-                    padding: EdgeInsets.all(2),
-                    constraints: BoxConstraints(),
-                    icon: Icon(Icons.help_center),
-                    color: Colors.red[900],
-                    onPressed: () {},
-                    tooltip: 'Get Hint for 5 Credits',
-                  ), // icon-1
-                  IconButton(
-                    padding: EdgeInsets.all(2),
-                    constraints: BoxConstraints(),
-                    icon: Icon(Icons.double_arrow),
-                    color: Colors.red[900],
-                    onPressed: () {},
-                    tooltip: 'Skip Level for 50 Credits',
-                  ), // icon-2
-                ],
-              ),
-            ),
-          ),
-          SizedBox(height: 36),
-        ]),
-      ),
+                      Divider(
+                        indent: 20,
+                        endIndent: 20,
+                      ),
+                      Card(
+                        elevation: 5,
+                        margin:
+                            EdgeInsets.symmetric(vertical: 12, horizontal: 30),
+                        child: ListTile(
+                          leading: Text(
+                            '1',
+                            style: TextStyle(
+                                fontSize: 38,
+                                fontWeight: FontWeight.w900,
+                                color: Colors.red[900]),
+                          ),
+                          title: Text('Hint:',
+                              style: Theme.of(context).textTheme.headline6),
+                          subtitle: Text(
+                            'Change your perspective on the issue.',
+                          ),
+                          trailing: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              IconButton(
+                                padding: EdgeInsets.all(2),
+                                constraints: BoxConstraints(),
+                                icon: Icon(Icons.help_center),
+                                color: Colors.red[900],
+                                onPressed: () {},
+                                tooltip: 'Get Hint for 5 Credits',
+                              ), // icon-1
+                              IconButton(
+                                padding: EdgeInsets.all(2),
+                                constraints: BoxConstraints(),
+                                icon: Icon(Icons.double_arrow),
+                                color: Colors.red[900],
+                                onPressed: () {},
+                                tooltip: 'Skip Level for 50 Credits',
+                              ), // icon-2
+                            ],
+                          ),
+                        ),
+                      ),
+                      Card(
+                        elevation: 5,
+                        margin:
+                            EdgeInsets.symmetric(vertical: 12, horizontal: 30),
+                        child: ListTile(
+                          leading: Text(
+                            '2',
+                            style: TextStyle(
+                                fontSize: 38,
+                                fontWeight: FontWeight.w900,
+                                color: Colors.red[900]),
+                          ),
+                          title: Text('Hint:',
+                              style: Theme.of(context).textTheme.headline6),
+                          subtitle: Text(
+                            'Have you ever heard of a place called Suoods?',
+                          ),
+                          trailing: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              IconButton(
+                                padding: EdgeInsets.all(2),
+                                constraints: BoxConstraints(),
+                                icon: Icon(Icons.help_center),
+                                color: Colors.red[900],
+                                onPressed: () {},
+                                tooltip: 'Get Hint for 5 Credits',
+                              ), // icon-1
+                              IconButton(
+                                padding: EdgeInsets.all(2),
+                                constraints: BoxConstraints(),
+                                icon: Icon(Icons.double_arrow),
+                                color: Colors.red[900],
+                                onPressed: () {},
+                                tooltip: 'Skip Level for 50 Credits',
+                              ), // icon-2
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 36),
+                    ]),
+                  );
+                });
+          }),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.black,
