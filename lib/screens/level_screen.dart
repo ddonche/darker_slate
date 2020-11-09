@@ -109,6 +109,7 @@ class _LevelScreenState extends State<LevelScreen> {
     final enteredGuess = _guessController.text.trim();
 
     if (enteredGuess != _levelSolution) {
+      clearTextInput();
       print('You guessed incorrectly!');
     } else if (enteredGuess == _levelSolution) {
       var firebaseUser = FirebaseAuth.instance.currentUser;
@@ -117,6 +118,8 @@ class _LevelScreenState extends State<LevelScreen> {
           .collection('users')
           .doc(firebaseUser.uid)
           .update({'userlevel': FieldValue.increment(1)});
+
+      clearTextInput();
       print('You got it right!');
     }
 
@@ -124,6 +127,10 @@ class _LevelScreenState extends State<LevelScreen> {
   }
 
   final _guessController = TextEditingController();
+
+  clearTextInput(){
+    _guessController.clear();
+  }
 
   void _solveLevel(BuildContext ctx) {
     showModalBottomSheet(
@@ -200,6 +207,7 @@ class _LevelScreenState extends State<LevelScreen> {
                                         .primaryColor,
                                     textColor: Colors.white,
                                     onPressed: _submitGuess,
+                                    //_submitGuess,
                                   ),
                                   Column(
                                     mainAxisSize: MainAxisSize.min,
