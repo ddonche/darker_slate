@@ -46,9 +46,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             .collection('users')
             .doc(authResult.user.uid)
             .set({
-          'username': userName,
-          'email': email,
-          'userlevel': userLevel,
+        'username': userName,
+        'email': email,
+        'userlevel': userLevel,
         });
 
         await FirebaseFirestore.instance

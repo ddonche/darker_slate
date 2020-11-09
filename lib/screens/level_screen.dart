@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -16,6 +18,7 @@ class LevelScreen extends StatefulWidget {
 class _LevelScreenState extends State<LevelScreen> {
   final _firestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
+  String _levelSolution;
   User loggedInUser;
 
   @override
@@ -57,7 +60,10 @@ class _LevelScreenState extends State<LevelScreen> {
         return GestureDetector(
           onTap: () {},
           child: Container(
-            height: MediaQuery.of(context).size.height * 0.75,
+            height: MediaQuery
+                .of(context)
+                .size
+                .height * 0.75,
             decoration: new BoxDecoration(
               color: Colors.white,
               borderRadius: new BorderRadius.only(
@@ -96,15 +102,163 @@ class _LevelScreenState extends State<LevelScreen> {
     );
   }
 
+  void _submitGuess() {
+    if (_guessController.text.isEmpty) {
+      return;
+    }
+    final enteredGuess = _guessController.text.trim();
+
+    if (enteredGuess != _levelSolution) {
+      print('You guessed incorrectly!');
+    } else if (enteredGuess == _levelSolution) {
+      var firebaseUser = FirebaseAuth.instance.currentUser;
+
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(firebaseUser.uid)
+          .update({'userlevel': FieldValue.increment(1)});
+      print('You got it right!');
+    }
+
+    Navigator.of(context).pop();
+  }
+
+  final _guessController = TextEditingController();
+
   void _solveLevel(BuildContext ctx) {
     showModalBottomSheet(
       context: ctx,
-      builder: (_) {
-        return GestureDetector(
-          onTap: () {},
-          behavior: HitTestBehavior.opaque,
-        );
-      },
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) =>
+          Container(
+              height: MediaQuery
+                  .of(context)
+                  .size
+                  .height * 0.55,
+              child: Card(
+                elevation: 5,
+                child: Container(
+                  padding: EdgeInsets.all(10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: <Widget>[
+                      TextField(
+                        decoration: InputDecoration(
+                            labelText: 'Enter Your Solution'),
+                        controller: _guessController,
+                        onSubmitted: (_) => _submitGuess(),
+                        /*onChanged: (val) {
+                      titleInput = val;
+                    },*/
+                      ),
+                      Center(
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 18.0),
+                          child: Column(
+                            children: [
+                              SizedBox(height: 20),
+                              Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment
+                                    .spaceAround,
+                                children: [
+                                  Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      IconButton(
+                                        padding: EdgeInsets.all(2),
+                                        constraints: BoxConstraints(),
+                                        icon: Icon(Icons.help_center),
+                                        color: Colors.red[900],
+                                        onPressed: () {},
+                                      ),
+                                      Text(
+                                        'Get Hint',
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 14,
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(
+                                          '(5 Credits)',
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 10,
+                                            fontStyle: FontStyle.italic,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  RaisedButton(
+                                    child: Text('Solve Level'),
+                                    color: Theme
+                                        .of(context)
+                                        .primaryColor,
+                                    textColor: Colors.white,
+                                    onPressed: _submitGuess,
+                                  ),
+                                  Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      IconButton(
+                                        padding: EdgeInsets.all(2),
+                                        constraints: BoxConstraints(),
+                                        icon: Icon(Icons.double_arrow),
+                                        color: Colors.red[900],
+                                        onPressed: () {},
+                                      ),
+                                      Text(
+                                        'Skip Level',
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 14,
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(
+                                          '(50 Credits)',
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 10,
+                                            fontStyle: FontStyle.italic,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              // Padding(
+                              //   padding: const EdgeInsets.all(16.0),
+                              //   child: Divider(),
+                              // ),
+                              // Padding(
+                              //   padding: const EdgeInsets.only(top: 28.0),
+                              //   child: Container(
+                              //     width: MediaQuery.of(context).size.width * 0.75,
+                              //     child: Text(
+                              //       'Hint: Use the image clue in the "Show Puzzle" popup to figure out the solution to this level.',
+                              //       style: TextStyle(
+                              //         fontStyle: FontStyle.italic,
+                              //       ),
+                              //       textAlign: TextAlign.center,
+                              //     ),
+                              //   ),
+                              // ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+          ),
     );
   }
 
@@ -156,7 +310,9 @@ class _LevelScreenState extends State<LevelScreen> {
                       ),
                     );
                   }
-                  var difficulty = (snapshot2.data['fails'].toDouble() / snapshot2.data['solves'].toDouble());
+                  var difficulty = (snapshot2.data['fails'].toDouble() /
+                      snapshot2.data['solves'].toDouble());
+                  _levelSolution = snapshot2.data['solution'];
                   return SingleChildScrollView(
                     child: Column(children: <Widget>[
                       Padding(
@@ -308,7 +464,7 @@ class _LevelScreenState extends State<LevelScreen> {
                       Card(
                         elevation: 5,
                         margin:
-                            EdgeInsets.symmetric(vertical: 12, horizontal: 30),
+                        EdgeInsets.symmetric(vertical: 12, horizontal: 30),
                         child: ListTile(
                           leading: Text(
                             '1',
@@ -318,7 +474,10 @@ class _LevelScreenState extends State<LevelScreen> {
                                 color: Colors.red[900]),
                           ),
                           title: Text('Hint:',
-                              style: Theme.of(context).textTheme.headline6),
+                              style: Theme
+                                  .of(context)
+                                  .textTheme
+                                  .headline6),
                           subtitle: Text(
                             'Change your perspective on the issue.',
                           ),
@@ -348,7 +507,7 @@ class _LevelScreenState extends State<LevelScreen> {
                       Card(
                         elevation: 5,
                         margin:
-                            EdgeInsets.symmetric(vertical: 12, horizontal: 30),
+                        EdgeInsets.symmetric(vertical: 12, horizontal: 30),
                         child: ListTile(
                           leading: Text(
                             '2',
@@ -358,7 +517,10 @@ class _LevelScreenState extends State<LevelScreen> {
                                 color: Colors.red[900]),
                           ),
                           title: Text('Hint:',
-                              style: Theme.of(context).textTheme.headline6),
+                              style: Theme
+                                  .of(context)
+                                  .textTheme
+                                  .headline6),
                           subtitle: Text(
                             'Have you ever heard of a place called Suoods?',
                           ),
