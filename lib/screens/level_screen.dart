@@ -18,6 +18,7 @@ class LevelScreen extends StatefulWidget {
 class _LevelScreenState extends State<LevelScreen> {
   final _firestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
+  ScrollController _scrollController = ScrollController();
   String _levelSolution;
   User loggedInUser;
 
@@ -122,8 +123,7 @@ class _LevelScreenState extends State<LevelScreen> {
 
       clearTextInput();
       print('You guessed incorrectly!');
-    }
-    else if (enteredGuess == _levelSolution) {
+    } else if (enteredGuess == _levelSolution) {
       var firebaseUser = FirebaseAuth.instance.currentUser;
 
       FirebaseFirestore.instance
@@ -134,7 +134,10 @@ class _LevelScreenState extends State<LevelScreen> {
       FirebaseFirestore.instance
           .collection('users')
           .doc(firebaseUser.uid)
-          .update({'userlevel': FieldValue.increment(1)});
+          .update({
+        'userlevel': FieldValue.increment(1),
+        'credits': FieldValue.increment(5)
+      });
 
       clearTextInput();
       print('You got it right!');
@@ -317,12 +320,13 @@ class _LevelScreenState extends State<LevelScreen> {
                       snapshot2.data['solves'].toDouble());
                   _levelSolution = snapshot2.data['solution'];
                   return SingleChildScrollView(
+                    controller: _scrollController,
                     child: Column(children: <Widget>[
                       Padding(
                         padding: const EdgeInsets.all(14),
                         child: Container(
-                          //color: Colors.black,
-                          height: 110,
+                          color: Colors.black,
+                          height: 120,
                           child: Padding(
                             padding: const EdgeInsets.only(top: 8),
                             child: Row(
@@ -330,16 +334,12 @@ class _LevelScreenState extends State<LevelScreen> {
                               children: <Widget>[
                                 Column(
                                   children: <Widget>[
-                                    Ink(
-                                      decoration: const ShapeDecoration(
-                                        color: Colors.green,
-                                        shape: CircleBorder(),
-                                      ),
-                                      child: IconButton(
-                                        icon: Icon(Icons.star),
-                                        color: Colors.white,
-                                        onPressed: () {},
-                                      ),
+                                    OutlineButton(
+                                      onPressed: () {},
+                                      shape: new CircleBorder(),
+                                      borderSide:
+                                          BorderSide(color: Colors.green, width: 3),
+                                      child: Icon(Icons.star, color: Colors.green,),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
@@ -355,24 +355,23 @@ class _LevelScreenState extends State<LevelScreen> {
                                     Text(
                                       'solves',
                                       style: TextStyle(
-                                        fontSize: 10,
+                                        fontSize: 12,
+                                        color: Colors.white,
                                       ),
                                     ),
                                   ],
                                 ),
-                                VerticalDivider(),
+                                VerticalDivider(
+                                  color: Colors.white,
+                                ),
                                 Column(
                                   children: <Widget>[
-                                    Ink(
-                                      decoration: const ShapeDecoration(
-                                        color: Colors.orange,
-                                        shape: CircleBorder(),
-                                      ),
-                                      child: IconButton(
-                                        icon: Icon(Icons.local_fire_department),
-                                        color: Colors.white,
-                                        onPressed: () {},
-                                      ),
+                                    OutlineButton(
+                                      onPressed: () {},
+                                      shape: new CircleBorder(),
+                                      borderSide:
+                                      BorderSide(color: Colors.orange, width: 3),
+                                      child: Icon(Icons.local_fire_department, color: Colors.orange,),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
@@ -388,24 +387,23 @@ class _LevelScreenState extends State<LevelScreen> {
                                     Text(
                                       'difficulty rating',
                                       style: TextStyle(
-                                        fontSize: 10,
+                                        fontSize: 12,
+                                        color: Colors.white,
                                       ),
                                     ),
                                   ],
                                 ),
-                                VerticalDivider(),
+                                VerticalDivider(
+                                  color: Colors.white,
+                                ),
                                 Column(
                                   children: <Widget>[
-                                    Ink(
-                                      decoration: const ShapeDecoration(
-                                        color: Colors.red,
-                                        shape: CircleBorder(),
-                                      ),
-                                      child: IconButton(
-                                        icon: Icon(Icons.star_outline),
-                                        color: Colors.white,
-                                        onPressed: () {},
-                                      ),
+                                    OutlineButton(
+                                      onPressed: () {},
+                                      shape: new CircleBorder(),
+                                      borderSide:
+                                      BorderSide(color: Colors.red, width: 3),
+                                      child: Icon(Icons.star_outline, color: Colors.red,),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
@@ -422,7 +420,8 @@ class _LevelScreenState extends State<LevelScreen> {
                                     Text(
                                       'fails',
                                       style: TextStyle(
-                                        fontSize: 10,
+                                        fontSize: 12,
+                                        color: Colors.white,
                                       ),
                                     ),
                                   ],
@@ -439,23 +438,23 @@ class _LevelScreenState extends State<LevelScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.only(right: 8.0),
-                            child: Icon(
-                              Icons.monetization_on,
-                              color: Colors.amber,
-                            ),
+                          IconButton(
+                            icon: Icon(Icons.monetization_on),
+                            color: Colors.amber,
+                            onPressed: () {},
                           ),
                           Text(
                             '${snapshot.data['credits'].toString()} credits',
                           ),
                           SizedBox(width: 40),
-                          Padding(
-                            padding: const EdgeInsets.only(right: 8.0),
-                            child: Icon(
-                              Icons.help_center,
-                              color: Colors.red[900],
-                            ),
+                          IconButton(
+                            icon: Icon(Icons.get_app),
+                            color: Colors.red[900],
+                            onPressed: () { _scrollController.animateTo(
+                                _scrollController.position.maxScrollExtent,
+                                duration: Duration(milliseconds: 500),
+                                curve: Curves.ease);
+                            },
                           ),
                           Text(
                             '3 hints left',
