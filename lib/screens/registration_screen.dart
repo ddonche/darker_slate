@@ -39,17 +39,21 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         }
       } else {
         int userLevel = 1;
+        int userCredits = 25;
+        int userRole = 0;
         authResult = await _auth.createUserWithEmailAndPassword(
             email: email, password: password);
 
+        // user role of 0 is registered user, 1 is mod, 2 is admin
         await FirebaseFirestore.instance
             .collection('users')
             .doc(authResult.user.uid)
             .set({
           'username': userName,
+          'role': userRole,
           'email': email,
           'userlevel': userLevel,
-          'credits': 25,
+          'credits': userCredits,
         });
 
         await FirebaseFirestore.instance
@@ -62,6 +66,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           'text': 'You can add field notes to help you organize ideas or remember things. '
               'This will help you keep track of important clues and other things you wish to save for later.',
         });
+        Navigator.pushNamed(context, LevelScreen.id);
       }
     } on PlatformException catch (err) {
       //var message = 'An error occurred, please check your credentials!';
