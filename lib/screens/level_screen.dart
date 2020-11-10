@@ -32,6 +32,7 @@ class _LevelScreenState extends State<LevelScreen> {
       final user = _auth.currentUser;
       if (user != null) {
         loggedInUser = user;
+
         print(loggedInUser.email);
       }
     } catch (e) {
@@ -99,17 +100,36 @@ class _LevelScreenState extends State<LevelScreen> {
     );
   }
 
-  void _submitGuess() {
+  void _submitGuess() async {
+    // obtain users's current level
+    DocumentSnapshot ds = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(_auth.currentUser.uid)
+        .get();
+    String thisLevel = ds['userlevel'].toString();
+    print(thisLevel);
+
     if (_guessController.text.isEmpty) {
       return;
     }
     final enteredGuess = _guessController.text.trim();
 
     if (enteredGuess != _levelSolution) {
+      FirebaseFirestore.instance
+          .collection('levels')
+          .doc(thisLevel)
+          .update({'fails': FieldValue.increment(1)});
+
       clearTextInput();
       print('You guessed incorrectly!');
-    } else if (enteredGuess == _levelSolution) {
+    }
+    else if (enteredGuess == _levelSolution) {
       var firebaseUser = FirebaseAuth.instance.currentUser;
+
+      FirebaseFirestore.instance
+          .collection('levels')
+          .doc(thisLevel)
+          .update({'solves': FieldValue.increment(1)});
 
       FirebaseFirestore.instance
           .collection('users')
