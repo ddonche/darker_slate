@@ -144,7 +144,10 @@ class _LevelScreenState extends State<LevelScreen> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
                 TextField(
-                  decoration: InputDecoration(labelText: 'Enter Your Solution'),
+                  decoration: InputDecoration(
+                    labelText: 'Enter Your Solution',
+                    prefixIcon: Icon(Icons.vpn_key),
+                  ),
                   controller: _guessController,
                   onSubmitted: (_) => _submitGuess(),
                   /*onChanged: (val) {
@@ -418,7 +421,10 @@ class _LevelScreenState extends State<LevelScreen> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(right: 8.0),
-                            child: Icon(Icons.monetization_on, color: Colors.amber,),
+                            child: Icon(
+                              Icons.monetization_on,
+                              color: Colors.amber,
+                            ),
                           ),
                           Text(
                             '${snapshot.data['credits'].toString()} credits',
@@ -426,7 +432,10 @@ class _LevelScreenState extends State<LevelScreen> {
                           SizedBox(width: 40),
                           Padding(
                             padding: const EdgeInsets.only(right: 8.0),
-                            child: Icon(Icons.help_center, color: Colors.red[900],),
+                            child: Icon(
+                              Icons.help_center,
+                              color: Colors.red[900],
+                            ),
                           ),
                           Text(
                             '3 hints left',

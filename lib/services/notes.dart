@@ -51,11 +51,6 @@ class Notes extends StatelessWidget {
                 subtitle: Text(noteData[index]['text'],
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,),
-                trailing: IconButton(
-                  icon: Icon(Icons.delete),
-                  color: Theme.of(context).errorColor,
-                  onPressed: () {},
-                ),
               ),
             ),
           ),
