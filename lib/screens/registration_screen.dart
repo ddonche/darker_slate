@@ -1,9 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
-
-import '../screens/welcome_screen.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import '../widgets/auth_form.dart';
 import 'level_screen.dart';
 
@@ -23,6 +24,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     String email,
     String password,
     String userName,
+    File image,
     bool isLogin,
     // BuildContext ctx,
   ) async {
@@ -39,10 +41,19 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         }
       } else {
         int userLevel = 1;
-        int userCredits = 25;
+        int userCredits = 10;
         int userRole = 0;
         authResult = await _auth.createUserWithEmailAndPassword(
             email: email, password: password);
+
+        final ref = FirebaseStorage.instance
+            .ref()
+            .child('user_images')
+            .child(authResult.user.uid + '.jpg');
+
+        await ref.putFile(image);
+
+        final url = await ref.getDownloadURL();
 
         // user role of 0 is registered user, 1 is mod, 2 is admin
         await FirebaseFirestore.instance
@@ -52,6 +63,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           'username': userName,
           'role': userRole,
           'email': email,
+          'image_url': url,
           'userlevel': userLevel,
           'credits': userCredits,
         });
@@ -142,20 +154,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   showAlert(),
-                  Hero(
-                    tag: 'logo',
-                    child: Container(
-                      height: 140.0,
-                      child: GestureDetector(
-                          onTap: () {
-                            Navigator.pushNamed(context, WelcomeScreen.id);
-                          },
-                          child: Image.asset('assets/images/logo.png')),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 18.0,
-                  ),
                   AuthForm(
                     _submitAuthForm,
                     _isLoading,

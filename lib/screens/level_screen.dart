@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -325,7 +323,7 @@ class _LevelScreenState extends State<LevelScreen> {
                       Padding(
                         padding: const EdgeInsets.all(14),
                         child: Container(
-                          color: Colors.black,
+                          //color: Colors.black,
                           height: 120,
                           child: Padding(
                             padding: const EdgeInsets.only(top: 8),
@@ -339,7 +337,7 @@ class _LevelScreenState extends State<LevelScreen> {
                                       shape: new CircleBorder(),
                                       borderSide:
                                           BorderSide(color: Colors.green, width: 3),
-                                      child: Icon(Icons.star, color: Colors.green,),
+                                      child: Icon(Icons.emoji_events, color: Colors.green,),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
@@ -356,13 +354,13 @@ class _LevelScreenState extends State<LevelScreen> {
                                       'solves',
                                       style: TextStyle(
                                         fontSize: 12,
-                                        color: Colors.white,
+                                        color: Colors.black,
                                       ),
                                     ),
                                   ],
                                 ),
                                 VerticalDivider(
-                                  color: Colors.white,
+                                  color: Colors.blueGrey,
                                 ),
                                 Column(
                                   children: <Widget>[
@@ -388,13 +386,13 @@ class _LevelScreenState extends State<LevelScreen> {
                                       'difficulty rating',
                                       style: TextStyle(
                                         fontSize: 12,
-                                        color: Colors.white,
+                                        color: Colors.black,
                                       ),
                                     ),
                                   ],
                                 ),
                                 VerticalDivider(
-                                  color: Colors.white,
+                                  color: Colors.blueGrey,
                                 ),
                                 Column(
                                   children: <Widget>[
@@ -403,7 +401,7 @@ class _LevelScreenState extends State<LevelScreen> {
                                       shape: new CircleBorder(),
                                       borderSide:
                                       BorderSide(color: Colors.red, width: 3),
-                                      child: Icon(Icons.star_outline, color: Colors.red,),
+                                      child: Icon(Icons.thumb_down_alt, color: Colors.red,),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
@@ -421,7 +419,7 @@ class _LevelScreenState extends State<LevelScreen> {
                                       'fails',
                                       style: TextStyle(
                                         fontSize: 12,
-                                        color: Colors.white,
+                                        color: Colors.black,
                                       ),
                                     ),
                                   ],
@@ -434,6 +432,7 @@ class _LevelScreenState extends State<LevelScreen> {
                       Divider(
                         indent: 20,
                         endIndent: 20,
+                        color: Colors.blueGrey,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -464,21 +463,32 @@ class _LevelScreenState extends State<LevelScreen> {
                       Divider(
                         indent: 20,
                         endIndent: 20,
+                        color: Colors.blueGrey,
+                      ),
+                      Text(
+                        snapshot2.data['title'].toString(),
+                        style: TextStyle(
+                          fontFamily: 'Vollkorn',
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blueGrey,
+                        ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(8),
+                        padding: const EdgeInsets.all(4),
                         child: Text(
-                          snapshot2.data['title'].toString(),
+                          snapshot2.data['subtitle'].toString(),
                           style: TextStyle(
                             fontFamily: 'Vollkorn',
-                            fontSize: 24,
+                            fontSize: 18,
                             fontWeight: FontWeight.bold,
+                            color: Colors.blueGrey,
                           ),
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(
-                          vertical: 18.0,
+                          vertical: 8.0,
                           horizontal: 40,
                         ),
                         child: SelectableText(

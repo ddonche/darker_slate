@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 
 import '../screens/registration_screen.dart';
-import '../screens/login_screen.dart';
 import '../widgets/rounded_button.dart';
 
 class WelcomeScreen extends StatefulWidget {

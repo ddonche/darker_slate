@@ -1,7 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'screens/welcome_screen.dart';
-import 'screens/login_screen.dart';
 import 'screens/registration_screen.dart';
 import 'screens/level_screen.dart';
 import 'screens/note_screen.dart';
