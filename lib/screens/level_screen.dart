@@ -19,6 +19,8 @@ class _LevelScreenState extends State<LevelScreen> {
   final _auth = FirebaseAuth.instance;
   ScrollController _scrollController = ScrollController();
   String _levelSolution;
+  String _levelImage;
+  String _imageCaption;
   static AudioCache player = new AudioCache();
   static const incorrectAudio = "incorrect.mp3";
   static const correctAudio = "correct.mp3";
@@ -45,6 +47,7 @@ class _LevelScreenState extends State<LevelScreen> {
 
   void _startAddNewNote(BuildContext ctx) {
     showModalBottomSheet(
+      //isScrollControlled: true,
       context: ctx,
       builder: (_) {
         return GestureDetector(
@@ -58,19 +61,20 @@ class _LevelScreenState extends State<LevelScreen> {
 
   void _startShowImageClue(BuildContext ctx) {
     showModalBottomSheet(
+      isScrollControlled: true,
       context: ctx,
       backgroundColor: Colors.transparent,
       builder: (_) {
         return GestureDetector(
           onTap: () {},
           child: Container(
-            height: MediaQuery.of(context).size.height * 0.75,
+            //height: MediaQuery.of(context).size.height * 0.99,
             decoration: new BoxDecoration(
-              color: Colors.white,
-              borderRadius: new BorderRadius.only(
-                topLeft: const Radius.circular(25.0),
-                topRight: const Radius.circular(25.0),
-              ),
+              color: Colors.transparent,
+              // borderRadius: new BorderRadius.only(
+              //   topLeft: const Radius.circular(25.0),
+              //   topRight: const Radius.circular(25.0),
+              // ),
             ),
             child: SingleChildScrollView(
               child: Center(
@@ -82,13 +86,11 @@ class _LevelScreenState extends State<LevelScreen> {
                       children: [
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Image.asset(
-                            'assets/images/unknown-caller-screenshot.png',
-                          ),
+                          child: Image.network(_levelImage),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Text('the cell phone message'),
+                          child: Text(_imageCaption),
                         ),
                       ],
                     ),
@@ -117,18 +119,18 @@ class _LevelScreenState extends State<LevelScreen> {
     }
     final enteredGuess = _guessController.text.trim();
 
+    // incorrect guess
     if (enteredGuess != _levelSolution) {
-
       FirebaseFirestore.instance
           .collection('levels')
           .doc(thisLevel)
           .update({'fails': FieldValue.increment(1)});
-
       player.play(incorrectAudio);
-
       clearTextInput();
       print('You guessed incorrectly!');
-    } else if (enteredGuess == _levelSolution) {
+    }
+    // correct guess
+    else if (enteredGuess == _levelSolution) {
       var firebaseUser = FirebaseAuth.instance.currentUser;
 
       FirebaseFirestore.instance
@@ -143,7 +145,8 @@ class _LevelScreenState extends State<LevelScreen> {
           .doc(firebaseUser.uid)
           .update({
         'userlevel': FieldValue.increment(1),
-        'credits': FieldValue.increment(5)
+        'credits': FieldValue.increment(5),
+        'hints': 3,
       });
 
       clearTextInput();
@@ -326,6 +329,8 @@ class _LevelScreenState extends State<LevelScreen> {
                   var difficulty = (snapshot2.data['fails'].toDouble() /
                       snapshot2.data['solves'].toDouble());
                   _levelSolution = snapshot2.data['solution'];
+                  _levelImage = snapshot2.data['image'];
+                  _imageCaption = snapshot2.data['image_caption'];
                   return SingleChildScrollView(
                     controller: _scrollController,
                     child: Column(children: <Widget>[
@@ -465,7 +470,7 @@ class _LevelScreenState extends State<LevelScreen> {
                             },
                           ),
                           Text(
-                            '3 hints left',
+                            '${snapshot.data['hints'].toString()} hints left',
                           ),
                         ],
                       ),
