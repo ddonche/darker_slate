@@ -5,7 +5,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:audioplayers/audio_cache.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_html/style.dart';
-import 'package:flutter_html/html_parser.dart';
 import '../widgets/drawer.dart';
 import 'welcome_screen.dart';
 
@@ -23,6 +22,8 @@ class _LevelScreenState extends State<LevelScreen> {
   String _levelSolution;
   String _levelImage;
   String _imageCaption;
+  int _userHints;
+  int _userCredits;
   static AudioCache player = new AudioCache();
   static const incorrectAudio = "incorrect.mp3";
   static const correctAudio = "correct.mp3";
@@ -129,7 +130,6 @@ class _LevelScreenState extends State<LevelScreen> {
           .update({'fails': FieldValue.increment(1)});
       player.play(incorrectAudio);
       clearTextInput();
-      print('You guessed incorrectly!');
     }
     // correct guess
     else if (enteredGuess == _levelSolution) {
@@ -147,12 +147,10 @@ class _LevelScreenState extends State<LevelScreen> {
           .doc(firebaseUser.uid)
           .update({
         'userlevel': FieldValue.increment(1),
-        'credits': FieldValue.increment(5),
+        'credits': FieldValue.increment(3),
         'hints': 3,
       });
-
       clearTextInput();
-      print('You got it right!');
     }
 
     Navigator.of(context).pop();
@@ -206,8 +204,27 @@ class _LevelScreenState extends State<LevelScreen> {
                                   padding: EdgeInsets.all(2),
                                   constraints: BoxConstraints(),
                                   icon: Icon(Icons.help_center),
-                                  color: Colors.red[900],
-                                  onPressed: () {},
+                                  color: (_userHints > 0 && _userCredits >= 5)
+                                      ? Colors.red[900]
+                                      : Colors.grey,
+                                  onPressed: () {
+                                    if (_userHints > 0 && _userCredits >= 5) {
+                                      FirebaseFirestore.instance
+                                          .collection('users')
+                                          .doc(_auth.currentUser.uid)
+                                          .update({
+                                        'hints': FieldValue.increment(-1),
+                                        'credits': FieldValue.increment(-5)
+                                      });
+                                      Navigator.pop(context);
+                                      _scrollController.animateTo(
+                                          _scrollController.position.maxScrollExtent,
+                                          duration: Duration(milliseconds: 500),
+                                          curve: Curves.ease);
+                                    } else {
+                                      return;
+                                    }
+                                  },
                                 ),
                                 Text(
                                   'Get Hint',
@@ -243,8 +260,23 @@ class _LevelScreenState extends State<LevelScreen> {
                                   padding: EdgeInsets.all(2),
                                   constraints: BoxConstraints(),
                                   icon: Icon(Icons.double_arrow),
-                                  color: Colors.red[900],
-                                  onPressed: () {},
+                                  color: (_userCredits > 30)
+                                      ? Colors.red[900]
+                                      : Colors.grey,
+                                  onPressed: () {
+                                    if (_userCredits >= 30) {
+                                      FirebaseFirestore.instance
+                                          .collection('users')
+                                          .doc(_auth.currentUser.uid)
+                                          .update({
+                                        'userlevel': FieldValue.increment(1),
+                                        'credits': FieldValue.increment(-30)
+                                      });
+                                      Navigator.pop(context);
+                                    } else {
+                                      return;
+                                    }
+                                  },
                                 ),
                                 Text(
                                   'Skip Level',
@@ -256,7 +288,7 @@ class _LevelScreenState extends State<LevelScreen> {
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text(
-                                    '(50 Credits)',
+                                    '(30 Credits)',
                                     style: TextStyle(
                                       color: Colors.black,
                                       fontSize: 10,
@@ -315,6 +347,8 @@ class _LevelScreenState extends State<LevelScreen> {
                 ),
               );
             }
+            _userHints = snapshot.data['hints'];
+            _userCredits = snapshot.data['credits'];
             return StreamBuilder<DocumentSnapshot>(
                 stream: _firestore
                     .collection('levels')
@@ -351,9 +385,12 @@ class _LevelScreenState extends State<LevelScreen> {
                                     OutlineButton(
                                       onPressed: () {},
                                       shape: new CircleBorder(),
-                                      borderSide:
-                                          BorderSide(color: Colors.green, width: 3),
-                                      child: Icon(Icons.emoji_events, color: Colors.green,),
+                                      borderSide: BorderSide(
+                                          color: Colors.green, width: 3),
+                                      child: Icon(
+                                        Icons.emoji_events,
+                                        color: Colors.green,
+                                      ),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
@@ -383,9 +420,12 @@ class _LevelScreenState extends State<LevelScreen> {
                                     OutlineButton(
                                       onPressed: () {},
                                       shape: new CircleBorder(),
-                                      borderSide:
-                                      BorderSide(color: Colors.orange, width: 3),
-                                      child: Icon(Icons.local_fire_department, color: Colors.orange,),
+                                      borderSide: BorderSide(
+                                          color: Colors.orange, width: 3),
+                                      child: Icon(
+                                        Icons.local_fire_department,
+                                        color: Colors.orange,
+                                      ),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
@@ -415,9 +455,12 @@ class _LevelScreenState extends State<LevelScreen> {
                                     OutlineButton(
                                       onPressed: () {},
                                       shape: new CircleBorder(),
-                                      borderSide:
-                                      BorderSide(color: Colors.red, width: 3),
-                                      child: Icon(Icons.thumb_down_alt, color: Colors.red,),
+                                      borderSide: BorderSide(
+                                          color: Colors.red, width: 3),
+                                      child: Icon(
+                                        Icons.thumb_down_alt,
+                                        color: Colors.red,
+                                      ),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
@@ -465,10 +508,11 @@ class _LevelScreenState extends State<LevelScreen> {
                           IconButton(
                             icon: Icon(Icons.get_app),
                             color: Colors.red[900],
-                            onPressed: () { _scrollController.animateTo(
-                                _scrollController.position.maxScrollExtent,
-                                duration: Duration(milliseconds: 500),
-                                curve: Curves.ease);
+                            onPressed: () {
+                              _scrollController.animateTo(
+                                  _scrollController.position.maxScrollExtent,
+                                  duration: Duration(milliseconds: 500),
+                                  curve: Curves.ease);
                             },
                           ),
                           Text(
@@ -508,104 +552,133 @@ class _LevelScreenState extends State<LevelScreen> {
                           horizontal: 40,
                         ),
                         child: Html(
-                          data:
-                          snapshot2.data['text'].toString(),
+                          data: snapshot2.data['text'].toString(),
                           style: {
                             //Alternatively, apply a style from an existing TextStyle:
                             "p": Style.fromTextStyle(
                               TextStyle(fontFamily: 'Vollkorn', fontSize: 18),
                             ),
                           },
-                            // Style: TextStyle(
-                            //   fontFamily: 'Vollkorn',
-                            //   fontSize: 18,
-                            //   ),
-
                         ),
                       ),
                       Divider(
                         indent: 20,
                         endIndent: 20,
                       ),
-                      Card(
-                        elevation: 5,
-                        margin:
-                            EdgeInsets.symmetric(vertical: 12, horizontal: 30),
-                        child: ListTile(
-                          leading: Text(
-                            '1',
+                      if (_userHints == 3)
+                        Text('You haven\'t used any hints yet.',
                             style: TextStyle(
-                                fontSize: 38,
-                                fontWeight: FontWeight.w900,
-                                color: Colors.red[900]),
-                          ),
-                          title: Text('Hint:',
-                              style: Theme.of(context).textTheme.headline6),
-                          subtitle: Text(
-                            'Change your perspective on the issue.',
-                          ),
-                          trailing: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: <Widget>[
-                              IconButton(
-                                padding: EdgeInsets.all(2),
-                                constraints: BoxConstraints(),
-                                icon: Icon(Icons.help_center),
-                                color: Colors.red[900],
-                                onPressed: () {},
-                                tooltip: 'Get Hint for 5 Credits',
-                              ), // icon-1
-                              IconButton(
-                                padding: EdgeInsets.all(2),
-                                constraints: BoxConstraints(),
-                                icon: Icon(Icons.double_arrow),
-                                color: Colors.red[900],
-                                onPressed: () {},
-                                tooltip: 'Skip Level for 50 Credits',
-                              ), // icon-2
+                              fontStyle: FontStyle.italic,
+                              color: Colors.blueGrey,
+                            )),
+                      if (_userHints <= 2)
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text('Hints:',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.blueGrey,
+                              )),
+                        ),
+                        Card(
+                          elevation: 3,
+                          margin:
+                              EdgeInsets.symmetric(vertical: 6, horizontal: 30),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 8.0, horizontal: 16),
+                                child: Text(
+                                  '1',
+                                  style: TextStyle(
+                                      fontSize: 38,
+                                      fontWeight: FontWeight.w900,
+                                      color: Colors.red[900]),
+                                ),
+                              ),
+                              Flexible(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    snapshot2.data['hint1'],
+                                    style: TextStyle(color: Colors.grey),
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
                         ),
-                      ),
-                      Card(
-                        elevation: 5,
-                        margin:
-                            EdgeInsets.symmetric(vertical: 12, horizontal: 30),
-                        child: ListTile(
-                          leading: Text(
-                            '2',
-                            style: TextStyle(
-                                fontSize: 38,
-                                fontWeight: FontWeight.w900,
-                                color: Colors.red[900]),
-                          ),
-                          title: Text('Hint:',
-                              style: Theme.of(context).textTheme.headline6),
-                          subtitle: Text(
-                            'Have you ever heard of a place called Suoods?',
-                          ),
-                          trailing: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: <Widget>[
-                              IconButton(
-                                padding: EdgeInsets.all(2),
-                                constraints: BoxConstraints(),
-                                icon: Icon(Icons.help_center),
-                                color: Colors.red[900],
-                                onPressed: () {},
-                                tooltip: 'Get Hint for 5 Credits',
-                              ), // icon-1
-                              IconButton(
-                                padding: EdgeInsets.all(2),
-                                constraints: BoxConstraints(),
-                                icon: Icon(Icons.double_arrow),
-                                color: Colors.red[900],
-                                onPressed: () {},
-                                tooltip: 'Skip Level for 50 Credits',
-                              ), // icon-2
+                      if (_userHints <= 1)
+                        Card(
+                          elevation: 3,
+                          margin:
+                              EdgeInsets.symmetric(vertical: 6, horizontal: 30),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 8.0, horizontal: 16),
+                                child: Text(
+                                  '2',
+                                  style: TextStyle(
+                                      fontSize: 38,
+                                      fontWeight: FontWeight.w900,
+                                      color: Colors.red[900]),
+                                ),
+                              ),
+                              Flexible(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    snapshot2.data['hint2'],
+                                    style: TextStyle(color: Colors.grey),
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
                         ),
+                      if (_userHints == 0)
+                        Card(
+                          elevation: 3,
+                          margin:
+                              EdgeInsets.symmetric(vertical: 6, horizontal: 30),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 8.0, horizontal: 16),
+                                child: Text(
+                                  '3',
+                                  style: TextStyle(
+                                      fontSize: 38,
+                                      fontWeight: FontWeight.w900,
+                                      color: Colors.red[900]),
+                                ),
+                              ),
+                              Flexible(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    snapshot2.data['hint3'],
+                                    style: TextStyle(color: Colors.grey),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text('You are out of hints for this level.',
+                            style: TextStyle(
+                              fontStyle: FontStyle.italic,
+                              color: Colors.red[900],
+                            )),
                       ),
                       SizedBox(height: 36),
                     ]),
