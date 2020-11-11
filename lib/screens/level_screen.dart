@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:audioplayers/audio_cache.dart';
-
+import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_html/style.dart';
+import 'package:flutter_html/html_parser.dart';
 import '../widgets/drawer.dart';
 import 'welcome_screen.dart';
 
@@ -505,12 +507,20 @@ class _LevelScreenState extends State<LevelScreen> {
                           vertical: 8.0,
                           horizontal: 40,
                         ),
-                        child: SelectableText(
+                        child: Html(
+                          data:
                           snapshot2.data['text'].toString(),
-                          style: TextStyle(
-                            fontFamily: 'Vollkorn',
-                            fontSize: 18,
-                          ),
+                          style: {
+                            //Alternatively, apply a style from an existing TextStyle:
+                            "p": Style.fromTextStyle(
+                              TextStyle(fontFamily: 'Vollkorn', fontSize: 18),
+                            ),
+                          },
+                            // Style: TextStyle(
+                            //   fontFamily: 'Vollkorn',
+                            //   fontSize: 18,
+                            //   ),
+
                         ),
                       ),
                       Divider(
