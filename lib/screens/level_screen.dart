@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:audioplayers/audio_cache.dart';
 
 import '../widgets/drawer.dart';
 import 'welcome_screen.dart';
@@ -18,6 +19,9 @@ class _LevelScreenState extends State<LevelScreen> {
   final _auth = FirebaseAuth.instance;
   ScrollController _scrollController = ScrollController();
   String _levelSolution;
+  static AudioCache player = new AudioCache();
+  static const incorrectAudio = "incorrect.mp3";
+  static const correctAudio = "correct.mp3";
   User loggedInUser;
 
   @override
@@ -114,10 +118,13 @@ class _LevelScreenState extends State<LevelScreen> {
     final enteredGuess = _guessController.text.trim();
 
     if (enteredGuess != _levelSolution) {
+
       FirebaseFirestore.instance
           .collection('levels')
           .doc(thisLevel)
           .update({'fails': FieldValue.increment(1)});
+
+      player.play(incorrectAudio);
 
       clearTextInput();
       print('You guessed incorrectly!');
@@ -128,6 +135,8 @@ class _LevelScreenState extends State<LevelScreen> {
           .collection('levels')
           .doc(thisLevel)
           .update({'solves': FieldValue.increment(1)});
+
+      player.play(correctAudio);
 
       FirebaseFirestore.instance
           .collection('users')

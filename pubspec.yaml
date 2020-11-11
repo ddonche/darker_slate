@@ -25,6 +25,7 @@ dependencies:
   cloud_firestore: ^0.14.2
   firebase_storage: ^5.0.1
   image_picker: ^0.6.7+14
+  audioplayers: ^0.16.2
 
 dev_dependencies:
   flutter_test:
