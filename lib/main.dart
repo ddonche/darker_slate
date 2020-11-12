@@ -4,6 +4,7 @@ import 'screens/welcome_screen.dart';
 import 'screens/registration_screen.dart';
 import 'screens/level_screen.dart';
 import 'screens/note_screen.dart';
+import 'screens/messages_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,6 +34,7 @@ class DarkerSlate extends StatelessWidget {
         NoteScreen.id : (context) => NoteScreen(),
         RegistrationScreen.id : (context) => RegistrationScreen(),
         WelcomeScreen.id : (context) => WelcomeScreen(),
+        MessagesScreen.id: (context) => MessagesScreen(),
       },
     );
   }

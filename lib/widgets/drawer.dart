@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../screens/note_screen.dart';
+import '../screens/messages_screen.dart';
 
 class AppDrawer extends StatefulWidget {
   @override
@@ -133,7 +134,13 @@ class _AppDrawerState extends State<AppDrawer> {
               Navigator.pushNamed(context, NoteScreen.id);
             },
           ),
-          _createDrawerItem(icon: Icons.chat, text: 'Messages'),
+          _createDrawerItem(
+            icon: Icons.chat,
+            text: 'Messages',
+            onTap: () {
+              Navigator.pushNamed(context, MessagesScreen.id);
+            },
+          ),
           _createDrawerItem(icon: Icons.emoji_events, text: 'Leaderboards'),
           Divider(),
           _createDrawerItem(icon: Icons.send, text: 'Invite a Friend'),

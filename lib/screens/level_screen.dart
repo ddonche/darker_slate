@@ -552,7 +552,7 @@ class _LevelScreenState extends State<LevelScreen> {
                           horizontal: 40,
                         ),
                         child: Html(
-                          data: snapshot2.data['text'].toString(),
+                          data: snapshot2.data['text'],
                           style: {
                             //Alternatively, apply a style from an existing TextStyle:
                             "p": Style.fromTextStyle(
