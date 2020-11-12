@@ -53,12 +53,14 @@ class _MessagesScreenState extends State<MessagesScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('Darker Slate'),
+        title: Text('Private Messages'),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.chat),
             tooltip: 'Messages',
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, MessagesScreen.id);
+            },
           ),
           IconButton(
             icon: const Icon(Icons.exit_to_app),
@@ -95,10 +97,21 @@ class _MessagesScreenState extends State<MessagesScreen> {
                   return ListView.builder(
                     itemCount: snapshot2.data.length,
                       itemBuilder: (context, index) {
-                        return ListTile(
-                          title: Text('From: ${snapshot2.data[index].data()['from']}'),
-                          subtitle: Text('Subject: ${snapshot2.data[index].data()['subject']}'),
-                          onTap: () => navigateToDetail(snapshot2.data[index]),
+                        return SingleChildScrollView(
+                          child: Card(
+                            margin: EdgeInsets.symmetric(horizontal: 18, vertical: 4),
+                            elevation: 3,
+                            child: ListTile(
+                              leading: CircleAvatar(
+                                radius: 24,
+                                backgroundImage: NetworkImage(snapshot2.data[index].data()['image']),
+                                backgroundColor: Colors.transparent,
+                              ),
+                              title: Text('From: ${snapshot2.data[index].data()['from']}'),
+                              subtitle: Text('Subject: ${snapshot2.data[index].data()['subject']}'),
+                              onTap: () => navigateToDetail(snapshot2.data[index]),
+                            ),
+                          ),
                         );
                       }
                   );

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:darker_slate/screens/messages_screen.dart';
 import 'package:darker_slate/screens/welcome_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,6 @@ class MessageDetailScreen extends StatefulWidget {
 class _MessageDetailScreenState extends State<MessageDetailScreen> {
   final _auth = FirebaseAuth.instance;
   User loggedInUser;
-  int _userCurrentLevel;
 
   @override
   void initState() {
@@ -40,12 +40,14 @@ class _MessageDetailScreenState extends State<MessageDetailScreen> {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          title: Text('Darker Slate'),
+          title: Text(widget.message.data()['subject']),
           actions: <Widget>[
             IconButton(
               icon: const Icon(Icons.chat),
               tooltip: 'Messages',
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, MessagesScreen.id);
+              },
             ),
             IconButton(
               icon: const Icon(Icons.exit_to_app),
@@ -67,7 +69,7 @@ class _MessageDetailScreenState extends State<MessageDetailScreen> {
               style: {
                 //Alternatively, apply a style from an existing TextStyle:
                 "p": Style.fromTextStyle(
-                  TextStyle(fontSize: 16),
+                  TextStyle(fontSize: 16,),
                 ),
               },
             ),

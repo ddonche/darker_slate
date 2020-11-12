@@ -1,3 +1,4 @@
+import 'package:darker_slate/screens/messages_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -322,7 +323,9 @@ class _LevelScreenState extends State<LevelScreen> {
           IconButton(
             icon: const Icon(Icons.chat),
             tooltip: 'Messages',
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, MessagesScreen.id);
+            },
           ),
           IconButton(
             icon: const Icon(Icons.exit_to_app),
@@ -580,6 +583,7 @@ class _LevelScreenState extends State<LevelScreen> {
                                 color: Colors.blueGrey,
                               )),
                         ),
+                      if (_userHints <= 2)
                         Card(
                           elevation: 3,
                           margin:
@@ -645,7 +649,7 @@ class _LevelScreenState extends State<LevelScreen> {
                         Card(
                           elevation: 3,
                           margin:
-                              EdgeInsets.symmetric(vertical: 6, horizontal: 30),
+                          EdgeInsets.symmetric(vertical: 6, horizontal: 30),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
@@ -672,14 +676,15 @@ class _LevelScreenState extends State<LevelScreen> {
                             ],
                           ),
                         ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text('You are out of hints for this level.',
-                            style: TextStyle(
-                              fontStyle: FontStyle.italic,
-                              color: Colors.red[900],
-                            )),
-                      ),
+                      if (_userHints == 0)
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text('You are out of hints for this level.',
+                              style: TextStyle(
+                                fontStyle: FontStyle.italic,
+                                color: Colors.red[900],
+                              )),
+                        ),
                       SizedBox(height: 36),
                     ]),
                   );

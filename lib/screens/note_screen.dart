@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'messages_screen.dart';
 import 'welcome_screen.dart';
 import '../services/notes.dart';
 
@@ -41,7 +42,9 @@ class _NoteScreenState extends State<NoteScreen> {
           IconButton(
             icon: const Icon(Icons.chat),
             tooltip: 'Messages',
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, MessagesScreen.id);
+            },
           ),
           IconButton(
             icon: const Icon(Icons.exit_to_app),
