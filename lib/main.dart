@@ -1,3 +1,4 @@
+import 'package:darker_slate/screens/level_progress_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'screens/welcome_screen.dart';
@@ -35,6 +36,7 @@ class DarkerSlate extends StatelessWidget {
         RegistrationScreen.id : (context) => RegistrationScreen(),
         WelcomeScreen.id : (context) => WelcomeScreen(),
         MessagesScreen.id: (context) => MessagesScreen(),
+        LevelProgressScreen.id : (context) => LevelProgressScreen(),
       },
     );
   }

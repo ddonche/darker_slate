@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:darker_slate/screens/level_progress_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -126,6 +127,9 @@ class _AppDrawerState extends State<AppDrawer> {
           _createDrawerItem(
             icon: Icons.book,
             text: 'Story Progress',
+            onTap: () {
+              Navigator.pushNamed(context, LevelProgressScreen.id);
+            },
           ),
           _createDrawerItem(
             icon: Icons.description,
