@@ -46,6 +46,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         int hints = 3;
         int hints_taken = 0;
         int fails = 0;
+        int successes = 0;
         int levelskips = 0;
         authResult = await _auth.createUserWithEmailAndPassword(
             email: email, password: password);
@@ -73,6 +74,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           'credits': userCredits,
           'hints_taken' : hints_taken,
           'levelskips': levelskips,
+          'successes' : successes,
           'fails' : fails,
         });
 

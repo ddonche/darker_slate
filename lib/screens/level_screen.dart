@@ -129,6 +129,11 @@ class _LevelScreenState extends State<LevelScreen> {
           .collection('levels')
           .doc(thisLevel)
           .update({'fails': FieldValue.increment(1)});
+
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(_auth.currentUser.uid)
+          .update({'fails': FieldValue.increment(1)});
       player.play(incorrectAudio);
       clearTextInput();
     }
@@ -150,6 +155,7 @@ class _LevelScreenState extends State<LevelScreen> {
         'userlevel': FieldValue.increment(1),
         'credits': FieldValue.increment(3),
         'hints': 3,
+        'successes' : FieldValue.increment(1),
       });
       clearTextInput();
     }
