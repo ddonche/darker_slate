@@ -44,6 +44,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         int userCredits = 10;
         int userRole = 0;
         int hints = 3;
+        int hints_taken = 0;
+        int fails = 0;
         int levelskips = 0;
         authResult = await _auth.createUserWithEmailAndPassword(
             email: email, password: password);
@@ -69,7 +71,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           'userlevel': userLevel,
           'hints': hints,
           'credits': userCredits,
+          'hints_taken' : hints_taken,
           'levelskips': levelskips,
+          'fails' : fails,
         });
 
         await FirebaseFirestore.instance

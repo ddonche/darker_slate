@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:darker_slate/screens/level_progress_screen.dart';
+import 'package:darker_slate/screens/profile_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -114,6 +115,9 @@ class _AppDrawerState extends State<AppDrawer> {
           _createDrawerItem(
             icon: Icons.account_circle,
             text: 'Profile',
+            onTap: () {
+              Navigator.pushNamed(context, ProfileScreen.id);
+            },
           ),
           _createDrawerItem(
             icon: Icons.monetization_on,

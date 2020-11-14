@@ -215,6 +215,7 @@ class _LevelScreenState extends State<LevelScreen> {
                                           .doc(_auth.currentUser.uid)
                                           .update({
                                         'hints': FieldValue.increment(-1),
+                                        'hints_taken': FieldValue.increment(1),
                                         'credits': FieldValue.increment(-5)
                                       });
                                       Navigator.pop(context);
