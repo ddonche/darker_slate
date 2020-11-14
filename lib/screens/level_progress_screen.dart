@@ -46,7 +46,12 @@ class _LevelProgressScreenState extends State<LevelProgressScreen> {
   }
 
   navigateToDetail(DocumentSnapshot level) {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => LevelDetailScreen(level: level,)));
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => LevelDetailScreen(
+                  level: level,
+                )));
   }
 
   @override
@@ -87,38 +92,74 @@ class _LevelProgressScreenState extends State<LevelProgressScreen> {
               );
             }
             _userCurrentLevel = snapshot.data['userlevel'];
-            return Container(child: FutureBuilder(
-                future: getLevels(),
-                builder: (_, snapshot2) {
-                  if(snapshot2.connectionState == ConnectionState.waiting) {
-                    return Center(
-                      child: Text('Loading levels...'),
-                    );
-                  } else {
-                    return ListView.builder(
-                        itemCount: snapshot2.data.length,
-                        itemBuilder: (context, index) {
-                          return SingleChildScrollView(
-                            child: Card(
-                              margin: EdgeInsets.symmetric(horizontal: 18, vertical: 4),
-                              elevation: 3,
-                              child: ListTile(
-                                leading: CircleAvatar(
-                                  radius: 24,
-                                  backgroundImage: NetworkImage(snapshot2.data[index].data()['image']),
-                                  backgroundColor: Colors.transparent,
+            return Container(
+              child: FutureBuilder(
+                  future: getLevels(),
+                  builder: (_, snapshot2) {
+                    if (snapshot2.connectionState == ConnectionState.waiting) {
+                      return Center(
+                        child: Text('Loading levels...'),
+                      );
+                    } else {
+                      return Center(
+                        child: GridView.builder(
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 3),
+                          scrollDirection: Axis.vertical,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Card(
+                                elevation: 4,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(top: 8.0),
+                                    child: Column(
+                                      children: [
+                                        Expanded(
+                                          child: GestureDetector(
+                                            child: Image.network(
+                                                snapshot2.data[index].data()['image'],
+                                            ),
+                                            onTap: () => navigateToDetail(snapshot2.data[index]),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                                          child: Text(
+                                            snapshot2.data[index].data()['title'],
+                                            style:
+                                                TextStyle(fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ),
-                                title: Text(snapshot2.data[index].data()['title']),
-                                subtitle: Text(snapshot2.data[index].data()['subtitle']),
-                                onTap: () => navigateToDetail(snapshot2.data[index]),
-                              ),
-                            ),
-                          );
-                        }
-                    );
-                  }
-                }
-            ),);
+                            );
+                          },
+                          itemCount: snapshot2.data.length,
+                          //snapshot2.data.length,
+                          //itemBuilder: (context, index) {
+                          //   return Card(
+                          //     margin: EdgeInsets.symmetric(horizontal: 18, vertical: 4),
+                          //     elevation: 3,
+                          //     child: ListTile(
+                          //       leading: CircleAvatar(
+                          //         radius: 24,
+                          //         backgroundImage: NetworkImage(snapshot2.data[index].data()['image']),
+                          //         backgroundColor: Colors.transparent,
+                          //       ),
+                          //       title: Text(snapshot2.data[index].data()['title']),
+                          //       subtitle: Text(snapshot2.data[index].data()['subtitle']),
+                          //       onTap: () => navigateToDetail(snapshot2.data[index]),
+                          //     ),
+                          //   );
+                        ),
+                      );
+                    }
+                  }),
+            );
           }),
     );
   }
