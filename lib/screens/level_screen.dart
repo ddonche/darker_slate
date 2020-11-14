@@ -271,7 +271,8 @@ class _LevelScreenState extends State<LevelScreen> {
                                           .doc(_auth.currentUser.uid)
                                           .update({
                                         'userlevel': FieldValue.increment(1),
-                                        'credits': FieldValue.increment(-30)
+                                        'credits': FieldValue.increment(-30),
+                                        'levelskips': FieldValue.increment(1),
                                       });
                                       Navigator.pop(context);
                                     } else {
