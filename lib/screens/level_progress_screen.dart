@@ -125,11 +125,19 @@ class _LevelProgressScreenState extends State<LevelProgressScreen> {
                                           ),
                                         ),
                                         Padding(
-                                          padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                                          padding: const EdgeInsets.only(top: 8.0, bottom: 4.0),
                                           child: Text(
                                             snapshot2.data[index].data()['title'],
                                             style:
                                                 TextStyle(fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(bottom: 8.0),
+                                          child: Text(
+                                            snapshot2.data[index].data()['subtitle'],
+                                            style:
+                                            TextStyle(fontSize: 10,),
                                           ),
                                         ),
                                       ],
