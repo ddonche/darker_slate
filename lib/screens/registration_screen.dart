@@ -44,7 +44,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         int userCredits = 10;
         int userRole = 0;
         int hints = 3;
-        int hints_taken = 0;
+        int hintsTaken = 0;
         int fails = 0;
         int successes = 0;
         int levelskips = 0;
@@ -72,7 +72,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           'userlevel': userLevel,
           'hints': hints,
           'credits': userCredits,
-          'hints_taken' : hints_taken,
+          'hints_taken' : hintsTaken,
           'levelskips': levelskips,
           'successes' : successes,
           'fails' : fails,

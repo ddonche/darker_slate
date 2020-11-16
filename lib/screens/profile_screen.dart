@@ -17,7 +17,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final _firestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
   User loggedInUser;
-  int _userCurrentLevel;
 
   @override
   void initState() {
@@ -73,7 +72,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               );
             }
-            _userCurrentLevel = snapshot.data['userlevel'];
             return SingleChildScrollView(
               child: Column(
                 children: [
@@ -95,7 +93,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   fontSize: 20.0,
                                   fontWeight: FontWeight.w500)),
                         ),
-                        Text('Level: ${_userCurrentLevel}',
+                        Text('Level: _userCurrentLevel',
                             style: TextStyle(
                               color: Colors.blueGrey,
                               fontSize: 16.0,
