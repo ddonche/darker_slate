@@ -37,7 +37,16 @@ class _LevelScreenState extends State<LevelScreen> {
     getCurrentUser();
     final fbm = FirebaseMessaging();
     fbm.requestNotificationPermissions();
-    fbm.configure();
+    fbm.configure(onMessage: (msg) {
+      print(msg);
+      return;
+    }, onLaunch: (msg) {
+      print(msg);
+      return;
+    }, onResume: (msg) {
+      print(msg);
+      return;
+    });
   }
 
   void getCurrentUser() async {
@@ -159,7 +168,7 @@ class _LevelScreenState extends State<LevelScreen> {
         'userlevel': FieldValue.increment(1),
         'credits': FieldValue.increment(3),
         'hints': 3,
-        'successes' : FieldValue.increment(1),
+        'successes': FieldValue.increment(1),
       });
       clearTextInput();
     }
@@ -230,7 +239,8 @@ class _LevelScreenState extends State<LevelScreen> {
                                       });
                                       Navigator.pop(context);
                                       _scrollController.animateTo(
-                                          _scrollController.position.maxScrollExtent,
+                                          _scrollController
+                                              .position.maxScrollExtent,
                                           duration: Duration(milliseconds: 500),
                                           curve: Curves.ease);
                                     } else {
@@ -661,7 +671,7 @@ class _LevelScreenState extends State<LevelScreen> {
                         Card(
                           elevation: 3,
                           margin:
-                          EdgeInsets.symmetric(vertical: 6, horizontal: 30),
+                              EdgeInsets.symmetric(vertical: 6, horizontal: 30),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
