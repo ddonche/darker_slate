@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -76,6 +75,15 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           'levelskips': levelskips,
           'successes' : successes,
           'fails' : fails,
+        });
+
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(authResult.user.uid)
+            .collection('level')
+            .doc(authResult.user.uid)
+            .set({
+          'userlevel': userLevel,
         });
 
         await FirebaseFirestore.instance

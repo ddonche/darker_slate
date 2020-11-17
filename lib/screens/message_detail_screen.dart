@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_html/style.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MessageDetailScreen extends StatefulWidget {
   final DocumentSnapshot message;
@@ -17,6 +18,9 @@ class MessageDetailScreen extends StatefulWidget {
 class _MessageDetailScreenState extends State<MessageDetailScreen> {
   final _auth = FirebaseAuth.instance;
   User loggedInUser;
+
+  // open PDF from URL https://www.youtube.com/watch?v=5S9qjreGFNc
+  String urlPDFPath = '';
 
   @override
   void initState() {
@@ -73,7 +77,28 @@ class _MessageDetailScreenState extends State<MessageDetailScreen> {
                 ),
               },
             ),
-            //Text(widget.message.data()['text']),
+            if (widget.message.data()['attachment'] != null)
+              Divider(),
+            if (widget.message.data()['attachment'] != null)
+              RaisedButton.icon(onPressed:() async {
+                String url = widget.message.data()['attachment'];
+                if (await canLaunch(url)) {
+                  await launch(url);
+                } else {
+                  throw 'Could not launch $url';
+                }
+              },
+                elevation: 2.0,
+                shape: new RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(5.0),
+                ),
+                color: Colors.blueGrey,
+                icon: Icon(Icons.attachment),
+                label: Text(widget.message.data()['attachment_name'],
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),),
           ],),
         ),
       ),

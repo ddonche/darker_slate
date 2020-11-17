@@ -28,6 +28,11 @@ dependencies:
   audioplayers: ^0.16.2
   flutter_html: ^1.0.2
   firebase_messaging: ^7.0.3
+  url_launcher: ^5.7.10
+  flutter_linkify: ^4.0.2
+  flutter_pdfview:
+  path_provider:
+  http:
 
 dev_dependencies:
   flutter_test:

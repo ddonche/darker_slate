@@ -109,6 +109,10 @@ class _MessagesScreenState extends State<MessagesScreen> {
                               ),
                               title: Text('From: ${snapshot2.data[index].data()['from']}'),
                               subtitle: Text('Subject: ${snapshot2.data[index].data()['subject']}'),
+                              trailing: Icon(Icons.attachment,
+                              color: (snapshot2.data[index].data()['attachment'] == null)
+                                  ? Colors.transparent
+                                  : Colors.red[900],),
                               onTap: () => navigateToDetail(snapshot2.data[index]),
                             ),
                           ),

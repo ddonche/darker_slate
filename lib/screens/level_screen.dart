@@ -170,6 +170,16 @@ class _LevelScreenState extends State<LevelScreen> {
         'hints': 3,
         'successes': FieldValue.increment(1),
       });
+
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(firebaseUser.uid)
+          .collection('level')
+          .doc(firebaseUser.uid)
+          .update({
+        'userlevel': FieldValue.increment(1),
+      });
+
       clearTextInput();
     }
 
