@@ -629,17 +629,19 @@ class _LevelScreenState extends State<LevelScreen> {
                                   backgroundColor: Colors.transparent,
                                 ),
                               ),
-                              Bubble(
-                                margin: BubbleEdges.only(top: 10),
-                                nip: BubbleNip.leftTop,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    snapshot2.data['hint1'],
-                                    style: TextStyle(color: Colors.grey),
+                              Flexible(
+                                child: Bubble(
+                                  margin: BubbleEdges.only(top: 10),
+                                  nip: BubbleNip.leftTop,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      snapshot2.data['hint1'],
+                                      style: TextStyle(color: Colors.grey),
+                                    ),
                                   ),
+                                  //child: Text('Hi, developer!'),
                                 ),
-                                //child: Text('Hi, developer!'),
                               ),
                             ],
                           ),
@@ -657,17 +659,19 @@ class _LevelScreenState extends State<LevelScreen> {
                                   backgroundColor: Colors.transparent,
                                 ),
                               ),
-                              Bubble(
-                                margin: BubbleEdges.only(top: 10),
-                                nip: BubbleNip.leftTop,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    snapshot2.data['hint2'],
-                                    style: TextStyle(color: Colors.grey),
+                              Flexible(
+                                child: Bubble(
+                                  margin: BubbleEdges.only(top: 10),
+                                  nip: BubbleNip.leftTop,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      snapshot2.data['hint2'],
+                                      style: TextStyle(color: Colors.grey),
+                                    ),
                                   ),
+                                  //child: Text('Hi, developer!'),
                                 ),
-                                //child: Text('Hi, developer!'),
                               ),
                             ],
                           ),
@@ -685,17 +689,19 @@ class _LevelScreenState extends State<LevelScreen> {
                                   backgroundColor: Colors.transparent,
                                 ),
                               ),
-                              Bubble(
-                                margin: BubbleEdges.only(top: 10),
-                                nip: BubbleNip.leftTop,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    snapshot2.data['hint3'],
-                                    style: TextStyle(color: Colors.grey),
+                              Flexible(
+                                child: Bubble(
+                                  margin: BubbleEdges.only(top: 10),
+                                  nip: BubbleNip.leftTop,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      snapshot2.data['hint3'],
+                                      style: TextStyle(color: Colors.grey),
+                                    ),
                                   ),
+                                  //child: Text('Hi, developer!'),
                                 ),
-                                //child: Text('Hi, developer!'),
                               ),
                             ],
                           ),
@@ -713,17 +719,20 @@ class _LevelScreenState extends State<LevelScreen> {
                                   backgroundColor: Colors.transparent,
                                 ),
                               ),
-                              Bubble(
-                                margin: BubbleEdges.only(top: 10),
-                                nip: BubbleNip.leftTop,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    'I have no more hints for you.',
-                                    style: TextStyle(color: Colors.grey),
+                              Flexible(
+                                child: Bubble(
+                                  margin: BubbleEdges.only(top: 10),
+                                  nip: BubbleNip.leftTop,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      'I have no more hints for you, but I believe in you!',
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(color: Colors.grey),
+                                    ),
                                   ),
+                                  //child: Text('Hi, developer!'),
                                 ),
-                                //child: Text('Hi, developer!'),
                               ),
                             ],
                           ),
