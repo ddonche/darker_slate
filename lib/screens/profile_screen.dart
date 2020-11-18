@@ -93,7 +93,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   fontSize: 20.0,
                                   fontWeight: FontWeight.w500)),
                         ),
-                        Text('Level: _userCurrentLevel',
+                        Text('Level: ${snapshot.data['userlevel']}',
                             style: TextStyle(
                               color: Colors.blueGrey,
                               fontSize: 16.0,

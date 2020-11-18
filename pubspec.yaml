@@ -33,6 +33,7 @@ dependencies:
   flutter_pdfview:
   path_provider:
   http:
+  bubble: ^1.1.9+1
 
 dev_dependencies:
   flutter_test:

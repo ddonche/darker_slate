@@ -7,6 +7,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:audioplayers/audio_cache.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_html/style.dart';
+import 'package:bubble/bubble.dart';
 import '../widgets/drawer.dart';
 import 'welcome_screen.dart';
 
@@ -616,6 +617,11 @@ class _LevelScreenState extends State<LevelScreen> {
                               )),
                         ),
                       if (_userHints <= 2)
+                        Bubble(
+                          margin: BubbleEdges.only(top: 10),
+                          nip: BubbleNip.leftTop,
+                          child: Text('Hi, developer!'),
+                        ),
                         Card(
                           elevation: 3,
                           margin:
