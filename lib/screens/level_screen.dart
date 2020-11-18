@@ -8,6 +8,7 @@ import 'package:audioplayers/audio_cache.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_html/style.dart';
 import 'package:bubble/bubble.dart';
+import 'package:pinch_zoom/pinch_zoom.dart';
 import '../widgets/drawer.dart';
 import 'welcome_screen.dart';
 
@@ -104,7 +105,11 @@ class _LevelScreenState extends State<LevelScreen> {
                       children: [
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Image.network(_levelImage),
+                          child: InteractiveViewer(
+                              boundaryMargin: EdgeInsets.all(20.0),
+                              minScale: 0.1,
+                              maxScale: 2.5,
+                              child: Image.network(_levelImage),),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -293,7 +298,7 @@ class _LevelScreenState extends State<LevelScreen> {
                                   padding: EdgeInsets.all(2),
                                   constraints: BoxConstraints(),
                                   icon: Icon(Icons.double_arrow),
-                                  color: (_userCredits > 30)
+                                  color: (_userCredits >= 30)
                                       ? Colors.red[900]
                                       : Colors.grey,
                                   onPressed: () {
@@ -304,6 +309,7 @@ class _LevelScreenState extends State<LevelScreen> {
                                           .update({
                                         'userlevel': FieldValue.increment(1),
                                         'credits': FieldValue.increment(-30),
+                                        'hints': 3,
                                         'levelskips': FieldValue.increment(1),
                                       });
                                       Navigator.pop(context);
@@ -708,34 +714,13 @@ class _LevelScreenState extends State<LevelScreen> {
                         ),
                       if (_userHints == 0)
                         Padding(
-                          padding: const EdgeInsets.only(left: 32.0),
-                          child: Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(right: 18.0),
-                                child: CircleAvatar(
-                                  radius: 22,
-                                  backgroundImage: NetworkImage('https://firebasestorage.googleapis.com/v0/b/darker-slate.appspot.com/o/character_images%2Fluis_alvarado.jpg?alt=media&token=23b67d88-0faa-42e2-b5ff-5619e3f7d250'),
-                                  backgroundColor: Colors.transparent,
-                                ),
-                              ),
-                              Flexible(
-                                child: Bubble(
-                                  margin: BubbleEdges.only(top: 10),
-                                  nip: BubbleNip.leftTop,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      'I have no more hints for you, but I believe in you!',
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(color: Colors.grey),
-                                    ),
-                                  ),
-                                  //child: Text('Hi, developer!'),
-                                ),
-                              ),
-                            ],
-                          ),
+                          padding: const EdgeInsets.only(top: 18.0),
+                          child: Text('No more hints for this level.',
+                              style: TextStyle(
+                                fontStyle: FontStyle.italic,
+                                fontSize: 12,
+                                color: Colors.red[900],
+                              )),
                         ),
                       SizedBox(height: 36),
                     ]),

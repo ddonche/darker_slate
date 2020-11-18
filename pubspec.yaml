@@ -34,6 +34,7 @@ dependencies:
   path_provider:
   http:
   bubble: ^1.1.9+1
+  pinch_zoom: ^0.0.4
 
 dev_dependencies:
   flutter_test:
