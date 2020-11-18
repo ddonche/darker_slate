@@ -610,37 +610,28 @@ class _LevelScreenState extends State<LevelScreen> {
                       if (_userHints <= 2)
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Text('Hints:',
+                          child: Text('Hints from Special Agent Alvarado:',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Colors.blueGrey,
                               )),
                         ),
                       if (_userHints <= 2)
-                        Bubble(
-                          margin: BubbleEdges.only(top: 10),
-                          nip: BubbleNip.leftTop,
-                          child: Text('Hi, developer!'),
-                        ),
-                        Card(
-                          elevation: 3,
-                          margin:
-                              EdgeInsets.symmetric(vertical: 6, horizontal: 30),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 32.0),
                           child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 8.0, horizontal: 16),
-                                child: Text(
-                                  '1',
-                                  style: TextStyle(
-                                      fontSize: 38,
-                                      fontWeight: FontWeight.w900,
-                                      color: Colors.red[900]),
+                                padding: const EdgeInsets.only(right: 18.0),
+                                child: CircleAvatar(
+                                  radius: 22,
+                                  backgroundImage: NetworkImage('https://firebasestorage.googleapis.com/v0/b/darker-slate.appspot.com/o/character_images%2Fluis_alvarado.jpg?alt=media&token=23b67d88-0faa-42e2-b5ff-5619e3f7d250'),
+                                  backgroundColor: Colors.transparent,
                                 ),
                               ),
-                              Flexible(
+                              Bubble(
+                                margin: BubbleEdges.only(top: 10),
+                                nip: BubbleNip.leftTop,
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text(
@@ -648,30 +639,27 @@ class _LevelScreenState extends State<LevelScreen> {
                                     style: TextStyle(color: Colors.grey),
                                   ),
                                 ),
+                                //child: Text('Hi, developer!'),
                               ),
                             ],
                           ),
                         ),
                       if (_userHints <= 1)
-                        Card(
-                          elevation: 3,
-                          margin:
-                              EdgeInsets.symmetric(vertical: 6, horizontal: 30),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 32.0),
                           child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 8.0, horizontal: 16),
-                                child: Text(
-                                  '2',
-                                  style: TextStyle(
-                                      fontSize: 38,
-                                      fontWeight: FontWeight.w900,
-                                      color: Colors.red[900]),
+                                padding: const EdgeInsets.only(right: 18.0),
+                                child: CircleAvatar(
+                                  radius: 22,
+                                  backgroundImage: NetworkImage('https://firebasestorage.googleapis.com/v0/b/darker-slate.appspot.com/o/character_images%2Fluis_alvarado.jpg?alt=media&token=23b67d88-0faa-42e2-b5ff-5619e3f7d250'),
+                                  backgroundColor: Colors.transparent,
                                 ),
                               ),
-                              Flexible(
+                              Bubble(
+                                margin: BubbleEdges.only(top: 10),
+                                nip: BubbleNip.leftTop,
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text(
@@ -679,30 +667,27 @@ class _LevelScreenState extends State<LevelScreen> {
                                     style: TextStyle(color: Colors.grey),
                                   ),
                                 ),
+                                //child: Text('Hi, developer!'),
                               ),
                             ],
                           ),
                         ),
                       if (_userHints == 0)
-                        Card(
-                          elevation: 3,
-                          margin:
-                              EdgeInsets.symmetric(vertical: 6, horizontal: 30),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 32.0),
                           child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 8.0, horizontal: 16),
-                                child: Text(
-                                  '3',
-                                  style: TextStyle(
-                                      fontSize: 38,
-                                      fontWeight: FontWeight.w900,
-                                      color: Colors.red[900]),
+                                padding: const EdgeInsets.only(right: 18.0),
+                                child: CircleAvatar(
+                                  radius: 22,
+                                  backgroundImage: NetworkImage('https://firebasestorage.googleapis.com/v0/b/darker-slate.appspot.com/o/character_images%2Fluis_alvarado.jpg?alt=media&token=23b67d88-0faa-42e2-b5ff-5619e3f7d250'),
+                                  backgroundColor: Colors.transparent,
                                 ),
                               ),
-                              Flexible(
+                              Bubble(
+                                margin: BubbleEdges.only(top: 10),
+                                nip: BubbleNip.leftTop,
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text(
@@ -710,18 +695,38 @@ class _LevelScreenState extends State<LevelScreen> {
                                     style: TextStyle(color: Colors.grey),
                                   ),
                                 ),
+                                //child: Text('Hi, developer!'),
                               ),
                             ],
                           ),
                         ),
                       if (_userHints == 0)
                         Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text('You are out of hints for this level.',
-                              style: TextStyle(
-                                fontStyle: FontStyle.italic,
-                                color: Colors.red[900],
-                              )),
+                          padding: const EdgeInsets.only(left: 32.0),
+                          child: Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(right: 18.0),
+                                child: CircleAvatar(
+                                  radius: 22,
+                                  backgroundImage: NetworkImage('https://firebasestorage.googleapis.com/v0/b/darker-slate.appspot.com/o/character_images%2Fluis_alvarado.jpg?alt=media&token=23b67d88-0faa-42e2-b5ff-5619e3f7d250'),
+                                  backgroundColor: Colors.transparent,
+                                ),
+                              ),
+                              Bubble(
+                                margin: BubbleEdges.only(top: 10),
+                                nip: BubbleNip.leftTop,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    'I have no more hints for you.',
+                                    style: TextStyle(color: Colors.grey),
+                                  ),
+                                ),
+                                //child: Text('Hi, developer!'),
+                              ),
+                            ],
+                          ),
                         ),
                       SizedBox(height: 36),
                     ]),
