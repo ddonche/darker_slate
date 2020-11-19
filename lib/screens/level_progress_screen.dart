@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../screens/welcome_screen.dart';
 import 'level_detail_screen.dart';
+import 'level_screen.dart';
 import 'messages_screen.dart';
 
 class LevelProgressScreen extends StatefulWidget {
@@ -61,6 +62,13 @@ class _LevelProgressScreenState extends State<LevelProgressScreen> {
       appBar: AppBar(
         title: Text('Story Progress'),
         actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.home),
+            tooltip: 'Home',
+            onPressed: () {
+              Navigator.pushNamed(context, LevelScreen.id);
+            },
+          ),
           IconButton(
             icon: const Icon(Icons.chat),
             tooltip: 'Messages',

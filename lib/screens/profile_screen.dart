@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'level_screen.dart';
 import 'messages_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -42,6 +43,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
       appBar: AppBar(
         title: Text('My Profile'),
         actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.home),
+            tooltip: 'Home',
+            onPressed: () {
+              Navigator.pushNamed(context, LevelScreen.id);
+            },
+          ),
           IconButton(
             icon: const Icon(Icons.chat),
             tooltip: 'Messages',

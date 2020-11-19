@@ -77,6 +77,9 @@ class _LevelScreenState extends State<LevelScreen> {
     );
   }
 
+  TransformationController controller = TransformationController();
+  String velocity = "VELOCITY";
+
   void _startShowImageClue(BuildContext ctx) {
     showModalBottomSheet(
       isScrollControlled: true,
@@ -108,7 +111,17 @@ class _LevelScreenState extends State<LevelScreen> {
                               boundaryMargin: EdgeInsets.all(20.0),
                               minScale: 0.1,
                               maxScale: 2.5,
-                              child: Image.network(_levelImage),),
+                              transformationController: controller,
+                              child: Image.network(_levelImage),
+                            onInteractionEnd: (ScaleEndDetails endDetails) {
+                              print(endDetails);
+                              print(endDetails.velocity);
+                              controller.value = Matrix4.identity();
+                              setState(() {
+                                velocity = endDetails.velocity.toString();
+
+                              });
+                            },),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -358,6 +371,13 @@ class _LevelScreenState extends State<LevelScreen> {
       appBar: AppBar(
         title: Text('Darker Slate'),
         actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.home),
+            tooltip: 'Home',
+            onPressed: () {
+              Navigator.pushNamed(context, LevelScreen.id);
+            },
+          ),
           IconButton(
             icon: const Icon(Icons.chat),
             tooltip: 'Messages',

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'level_screen.dart';
 import 'messages_screen.dart';
 import 'welcome_screen.dart';
 import '../services/notes.dart';
@@ -39,6 +40,13 @@ class _NoteScreenState extends State<NoteScreen> {
       appBar: AppBar(
         title: const Text('Field Notes'),
         actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.home),
+            tooltip: 'Home',
+            onPressed: () {
+              Navigator.pushNamed(context, LevelScreen.id);
+            },
+          ),
           IconButton(
             icon: const Icon(Icons.chat),
             tooltip: 'Messages',

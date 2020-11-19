@@ -7,6 +7,8 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_html/style.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'level_screen.dart';
+
 class MessageDetailScreen extends StatefulWidget {
   final DocumentSnapshot message;
   MessageDetailScreen({this.message});
@@ -46,6 +48,13 @@ class _MessageDetailScreenState extends State<MessageDetailScreen> {
         appBar: AppBar(
           title: Text(widget.message.data()['subject']),
           actions: <Widget>[
+            IconButton(
+              icon: const Icon(Icons.home),
+              tooltip: 'Home',
+              onPressed: () {
+                Navigator.pushNamed(context, LevelScreen.id);
+              },
+            ),
             IconButton(
               icon: const Icon(Icons.chat),
               tooltip: 'Messages',

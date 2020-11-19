@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../screens/welcome_screen.dart';
+import 'level_screen.dart';
 import 'message_detail_screen.dart';
 
 class MessagesScreen extends StatefulWidget {
@@ -55,6 +56,13 @@ class _MessagesScreenState extends State<MessagesScreen> {
       appBar: AppBar(
         title: Text('Private Messages'),
         actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.home),
+            tooltip: 'Home',
+            onPressed: () {
+              Navigator.pushNamed(context, LevelScreen.id);
+            },
+          ),
           IconButton(
             icon: const Icon(Icons.chat),
             tooltip: 'Messages',
