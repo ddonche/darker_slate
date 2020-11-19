@@ -8,6 +8,7 @@ import 'package:audioplayers/audio_cache.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_html/style.dart';
 import 'package:bubble/bubble.dart';
+import 'package:badges/badges.dart';
 import '../widgets/drawer.dart';
 import 'welcome_screen.dart';
 
@@ -27,6 +28,7 @@ class _LevelScreenState extends State<LevelScreen> {
   String _imageCaption;
   int _userHints;
   int _userCredits;
+  bool _hasMessage;
   static AudioCache player = new AudioCache();
   static const incorrectAudio = "incorrect.mp3";
   static const correctAudio = "correct.mp3";
@@ -108,20 +110,20 @@ class _LevelScreenState extends State<LevelScreen> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: InteractiveViewer(
-                              boundaryMargin: EdgeInsets.all(20.0),
-                              minScale: 0.1,
-                              maxScale: 2.5,
-                              transformationController: controller,
-                              child: Image.network(_levelImage),
+                            boundaryMargin: EdgeInsets.all(20.0),
+                            minScale: 0.1,
+                            maxScale: 2.5,
+                            transformationController: controller,
+                            child: Image.network(_levelImage),
                             onInteractionEnd: (ScaleEndDetails endDetails) {
                               print(endDetails);
                               print(endDetails.velocity);
                               controller.value = Matrix4.identity();
                               setState(() {
                                 velocity = endDetails.velocity.toString();
-
                               });
-                            },),
+                            },
+                          ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -186,6 +188,7 @@ class _LevelScreenState extends State<LevelScreen> {
         'userlevel': FieldValue.increment(1),
         'credits': FieldValue.increment(3),
         'hints': 3,
+        'hasMessage': true,
         'successes': FieldValue.increment(1),
       });
 
@@ -199,6 +202,9 @@ class _LevelScreenState extends State<LevelScreen> {
       });
 
       clearTextInput();
+      setState(() {
+        _hasMessage = true;
+      });
     }
 
     Navigator.of(context).pop();
@@ -378,13 +384,41 @@ class _LevelScreenState extends State<LevelScreen> {
               Navigator.pushNamed(context, LevelScreen.id);
             },
           ),
-          IconButton(
-            icon: const Icon(Icons.chat),
-            tooltip: 'Messages',
-            onPressed: () {
-              Navigator.pushNamed(context, MessagesScreen.id);
-            },
-          ),
+          if (_hasMessage == true)
+            Badge(
+              badgeContent: Text('!',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  )),
+              position: BadgePosition.topEnd(top: 0, end: 3),
+              padding: EdgeInsets.all(6),
+              badgeColor: Colors.redAccent,
+              child: IconButton(
+                icon: const Icon(Icons.chat),
+                tooltip: 'Messages',
+                onPressed: () {
+                  Navigator.pushNamed(context, MessagesScreen.id);
+                  FirebaseFirestore.instance
+                      .collection('users')
+                      .doc(_auth.currentUser.uid)
+                      .update({
+                    'hasMessage': false,
+                  });
+                  setState(() {
+                    _hasMessage = false;
+                  });
+                },
+              ),
+            ),
+          if (_hasMessage == false || _hasMessage == null)
+            IconButton(
+              icon: const Icon(Icons.chat),
+              tooltip: 'Messages',
+              onPressed: () {
+                Navigator.pushNamed(context, MessagesScreen.id);
+              },
+            ),
           IconButton(
             icon: const Icon(Icons.exit_to_app),
             tooltip: 'Log Out',
@@ -410,6 +444,7 @@ class _LevelScreenState extends State<LevelScreen> {
             }
             _userHints = snapshot.data['hints'];
             _userCredits = snapshot.data['credits'];
+            _hasMessage = snapshot.data['hasMessage'];
             return StreamBuilder<DocumentSnapshot>(
                 stream: _firestore
                     .collection('levels')
@@ -650,7 +685,8 @@ class _LevelScreenState extends State<LevelScreen> {
                                 padding: const EdgeInsets.only(right: 18.0),
                                 child: CircleAvatar(
                                   radius: 22,
-                                  backgroundImage: NetworkImage('https://firebasestorage.googleapis.com/v0/b/darker-slate.appspot.com/o/character_images%2Fluis_alvarado.jpg?alt=media&token=23b67d88-0faa-42e2-b5ff-5619e3f7d250'),
+                                  backgroundImage: NetworkImage(
+                                      'https://firebasestorage.googleapis.com/v0/b/darker-slate.appspot.com/o/character_images%2Fluis_alvarado.jpg?alt=media&token=23b67d88-0faa-42e2-b5ff-5619e3f7d250'),
                                   backgroundColor: Colors.transparent,
                                 ),
                               ),
@@ -680,7 +716,8 @@ class _LevelScreenState extends State<LevelScreen> {
                                 padding: const EdgeInsets.only(right: 18.0),
                                 child: CircleAvatar(
                                   radius: 22,
-                                  backgroundImage: NetworkImage('https://firebasestorage.googleapis.com/v0/b/darker-slate.appspot.com/o/character_images%2Fluis_alvarado.jpg?alt=media&token=23b67d88-0faa-42e2-b5ff-5619e3f7d250'),
+                                  backgroundImage: NetworkImage(
+                                      'https://firebasestorage.googleapis.com/v0/b/darker-slate.appspot.com/o/character_images%2Fluis_alvarado.jpg?alt=media&token=23b67d88-0faa-42e2-b5ff-5619e3f7d250'),
                                   backgroundColor: Colors.transparent,
                                 ),
                               ),
@@ -710,7 +747,8 @@ class _LevelScreenState extends State<LevelScreen> {
                                 padding: const EdgeInsets.only(right: 18.0),
                                 child: CircleAvatar(
                                   radius: 22,
-                                  backgroundImage: NetworkImage('https://firebasestorage.googleapis.com/v0/b/darker-slate.appspot.com/o/character_images%2Fluis_alvarado.jpg?alt=media&token=23b67d88-0faa-42e2-b5ff-5619e3f7d250'),
+                                  backgroundImage: NetworkImage(
+                                      'https://firebasestorage.googleapis.com/v0/b/darker-slate.appspot.com/o/character_images%2Fluis_alvarado.jpg?alt=media&token=23b67d88-0faa-42e2-b5ff-5619e3f7d250'),
                                   backgroundColor: Colors.transparent,
                                 ),
                               ),
