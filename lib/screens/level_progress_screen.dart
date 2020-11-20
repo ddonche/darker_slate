@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -133,19 +135,20 @@ class _LevelProgressScreenState extends State<LevelProgressScreen> {
                                           ),
                                         ),
                                         Padding(
-                                          padding: const EdgeInsets.only(top: 8.0, bottom: 4.0),
+                                          padding: const EdgeInsets.only(top: 8.0, bottom: 2.0),
                                           child: Text(
                                             snapshot2.data[index].data()['title'],
                                             style:
-                                                TextStyle(fontWeight: FontWeight.bold),
+                                                TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
                                           ),
                                         ),
                                         Padding(
-                                          padding: const EdgeInsets.only(bottom: 8.0),
+                                          padding: const EdgeInsets.only(bottom: 8),
                                           child: Text(
                                             snapshot2.data[index].data()['subtitle'],
+                                            textAlign: TextAlign.center,
                                             style:
-                                            TextStyle(fontSize: 10,),
+                                            TextStyle(fontSize: 10),
                                           ),
                                         ),
                                       ],
