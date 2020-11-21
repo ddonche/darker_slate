@@ -652,7 +652,7 @@ class _LevelScreenState extends State<LevelScreen> {
                           style: {
                             //Alternatively, apply a style from an existing TextStyle:
                             "p": Style.fromTextStyle(
-                              TextStyle(fontFamily: 'Vollkorn', fontSize: 18),
+                              TextStyle(fontFamily: 'Vollkorn', fontSize: 16),
                             ),
                           },
                         ),
