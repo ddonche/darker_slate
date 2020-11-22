@@ -20,6 +20,7 @@ class LevelDetailScreen extends StatefulWidget {
 class _LevelDetailScreenState extends State<LevelDetailScreen> {
   final _auth = FirebaseAuth.instance;
   User loggedInUser;
+  bool _hasMessage;
 
   @override
   void initState() {

@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:badges/badges.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,7 @@ class _LevelProgressScreenState extends State<LevelProgressScreen> {
   final _auth = FirebaseAuth.instance;
   User loggedInUser;
   int _userCurrentLevel;
+  bool _hasMessage;
 
   @override
   void initState() {
@@ -71,13 +73,41 @@ class _LevelProgressScreenState extends State<LevelProgressScreen> {
               Navigator.pushNamed(context, LevelScreen.id);
             },
           ),
-          IconButton(
-            icon: const Icon(Icons.chat),
-            tooltip: 'Messages',
-            onPressed: () {
-              Navigator.pushNamed(context, MessagesScreen.id);
-            },
-          ),
+          if (_hasMessage == true)
+            Badge(
+              badgeContent: Text('!',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  )),
+              position: BadgePosition.topEnd(top: 0, end: 3),
+              padding: EdgeInsets.all(6),
+              badgeColor: Colors.redAccent,
+              child: IconButton(
+                icon: const Icon(Icons.chat),
+                tooltip: 'Messages',
+                onPressed: () {
+                  Navigator.pushNamed(context, MessagesScreen.id);
+                  FirebaseFirestore.instance
+                      .collection('users')
+                      .doc(_auth.currentUser.uid)
+                      .update({
+                    'hasMessage': false,
+                  });
+                  setState(() {
+                    _hasMessage = false;
+                  });
+                },
+              ),
+            ),
+          if (_hasMessage == false || _hasMessage == null)
+            IconButton(
+              icon: const Icon(Icons.chat),
+              tooltip: 'Messages',
+              onPressed: () {
+                Navigator.pushNamed(context, MessagesScreen.id);
+              },
+            ),
           IconButton(
             icon: const Icon(Icons.exit_to_app),
             tooltip: 'Log Out',
@@ -102,6 +132,7 @@ class _LevelProgressScreenState extends State<LevelProgressScreen> {
               );
             }
             _userCurrentLevel = snapshot.data['userlevel'];
+            _hasMessage = snapshot.data['hasMessage'];
             return Container(
               child: FutureBuilder(
                   future: getLevels(),
