@@ -223,6 +223,40 @@ class _AuthFormState extends State<AuthForm> {
                       ),
                   ],
                 ),
+                SizedBox(height: 30),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    InkWell(
+                      onTap: () {}, // Handle your callback.
+                      splashColor: Colors.brown.withOpacity(0.5),
+                      child: Ink(
+                        height: 48,
+                        width: 48,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage('assets/images/fb.png'),
+                            //fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {}, // Handle your callback.
+                      splashColor: Colors.brown.withOpacity(0.5),
+                      child: Ink(
+                        height: 48,
+                        width: 48,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage('assets/images/gmail.png'),
+                            //fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
