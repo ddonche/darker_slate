@@ -1,3 +1,4 @@
+import 'package:darker_slate/screens/leaderboard_screen.dart';
 import 'package:darker_slate/screens/level_progress_screen.dart';
 import 'package:darker_slate/screens/profile_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -39,6 +40,7 @@ class DarkerSlate extends StatelessWidget {
         MessagesScreen.id: (context) => MessagesScreen(),
         LevelProgressScreen.id : (context) => LevelProgressScreen(),
         ProfileScreen.id : (context) => ProfileScreen(),
+        LeaderboardScreen.id : (context) => LeaderboardScreen(),
       },
     );
   }

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:darker_slate/screens/leaderboard_screen.dart';
 import 'package:darker_slate/screens/level_progress_screen.dart';
 import 'package:darker_slate/screens/profile_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -149,7 +150,13 @@ class _AppDrawerState extends State<AppDrawer> {
               Navigator.pushNamed(context, MessagesScreen.id);
             },
           ),
-          _createDrawerItem(icon: Icons.emoji_events, text: 'Leaderboards'),
+          _createDrawerItem(
+            icon: Icons.emoji_events,
+            text: 'Leaderboards',
+            onTap: () {
+              Navigator.pushNamed(context, LeaderboardScreen.id);
+            },
+          ),
           Divider(),
           _createDrawerItem(icon: Icons.send, text: 'Invite a Friend'),
           _createDrawerItem(icon: Icons.bug_report, text: 'Report an issue'),
