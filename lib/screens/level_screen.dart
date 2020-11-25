@@ -643,6 +643,28 @@ class _LevelScreenState extends State<LevelScreen> {
                         ),
                       ),
                       Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              flex: 2,
+                              child: Padding(
+                                padding: const EdgeInsets.all(30.0),
+                                child: Center(child: Text(snapshot2.data['report'])),
+                              ),
+                            ),
+                            Expanded(
+                              flex: 1,
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 10, bottom: 10, right: 20),
+                                child: Center(child: Image.network(snapshot2.data['cover'])),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Divider(),
+                      Padding(
                         padding: const EdgeInsets.symmetric(
                           vertical: 8.0,
                           horizontal: 40,
