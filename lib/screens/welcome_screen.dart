@@ -84,7 +84,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 ),
                 SizedBox(height: 10),
                 Text(
-                  'This game has 4 levels so far.',
+                  'This game has 6 levels so far.',
                   style: TextStyle(
                     color: Colors.blueGrey,
                     fontSize: 12,
