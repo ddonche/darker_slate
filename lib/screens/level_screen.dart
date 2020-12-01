@@ -463,366 +463,378 @@ class _LevelScreenState extends State<LevelScreen> {
                   _levelSolution = snapshot2.data['solution'];
                   _levelImage = snapshot2.data['image'];
                   _imageCaption = snapshot2.data['image_caption'];
-                  return SingleChildScrollView(
-                    controller: _scrollController,
-                    child: Column(children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.all(14),
-                        child: Container(
-                          //color: Colors.black,
-                          height: 120,
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 8),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: <Widget>[
-                                Column(
-                                  children: <Widget>[
-                                    OutlineButton(
-                                      onPressed: () {},
-                                      shape: new CircleBorder(),
-                                      borderSide: BorderSide(
-                                          color: Colors.green, width: 3),
-                                      child: Icon(
-                                        Icons.emoji_events,
-                                        color: Colors.green,
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text(
-                                        snapshot2.data['solves'].toString(),
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
+                  return Stack(
+                    children: [
+                      Positioned.fill(
+                        child: Opacity(
+                          opacity: 0.7,
+                          child: Image(
+                            image: AssetImage("assets/images/bg.jpg"),
+                            repeat: ImageRepeat.repeat,
+                          ),
+                        ),
+                      ),
+                      SingleChildScrollView(
+                      controller: _scrollController,
+                      child: Column(children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.all(14),
+                          child: Container(
+                            //color: Colors.black,
+                            height: 120,
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 8),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: <Widget>[
+                                  Column(
+                                    children: <Widget>[
+                                      OutlineButton(
+                                        onPressed: () {},
+                                        shape: new CircleBorder(),
+                                        borderSide: BorderSide(
+                                            color: Colors.green, width: 3),
+                                        child: Icon(
+                                          Icons.emoji_events,
                                           color: Colors.green,
                                         ),
                                       ),
-                                    ),
-                                    Text(
-                                      'solves',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: Colors.white,
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(
+                                          snapshot2.data['solves'].toString(),
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.green,
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                                VerticalDivider(
-                                  color: Colors.blueGrey,
-                                ),
-                                Column(
-                                  children: <Widget>[
-                                    OutlineButton(
-                                      onPressed: () {},
-                                      shape: new CircleBorder(),
-                                      borderSide: BorderSide(
-                                          color: Colors.orange, width: 3),
-                                      child: Icon(
-                                        Icons.local_fire_department,
-                                        color: Colors.orange,
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text(
-                                        difficulty.toStringAsFixed(1),
+                                      Text(
+                                        'solves',
                                         style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  VerticalDivider(
+                                    color: Colors.blueGrey,
+                                  ),
+                                  Column(
+                                    children: <Widget>[
+                                      OutlineButton(
+                                        onPressed: () {},
+                                        shape: new CircleBorder(),
+                                        borderSide: BorderSide(
+                                            color: Colors.orange, width: 3),
+                                        child: Icon(
+                                          Icons.local_fire_department,
                                           color: Colors.orange,
                                         ),
                                       ),
-                                    ),
-                                    Text(
-                                      'difficulty rating',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: Colors.white,
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(
+                                          difficulty.toStringAsFixed(1),
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.orange,
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                                VerticalDivider(
-                                  color: Colors.blueGrey,
-                                ),
-                                Column(
-                                  children: <Widget>[
-                                    OutlineButton(
-                                      onPressed: () {},
-                                      shape: new CircleBorder(),
-                                      borderSide: BorderSide(
-                                          color: Colors.red, width: 3),
-                                      child: Icon(
-                                        Icons.thumb_down_alt,
-                                        color: Colors.red,
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text(
-                                        snapshot2.data['fails'].toString(),
-                                        //currentLevelFails.toString(),
+                                      Text(
+                                        'difficulty rating',
                                         style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  VerticalDivider(
+                                    color: Colors.blueGrey,
+                                  ),
+                                  Column(
+                                    children: <Widget>[
+                                      OutlineButton(
+                                        onPressed: () {},
+                                        shape: new CircleBorder(),
+                                        borderSide: BorderSide(
+                                            color: Colors.red, width: 3),
+                                        child: Icon(
+                                          Icons.thumb_down_alt,
                                           color: Colors.red,
                                         ),
                                       ),
-                                    ),
-                                    Text(
-                                      'fails',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: Colors.white,
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(
+                                          snapshot2.data['fails'].toString(),
+                                          //currentLevelFails.toString(),
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.red,
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              ],
+                                      Text(
+                                        'fails',
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      Divider(
-                        indent: 20,
-                        endIndent: 20,
-                        color: Colors.blueGrey,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          IconButton(
-                            icon: Icon(Icons.monetization_on),
-                            color: Colors.amber,
-                            onPressed: () {},
-                          ),
-                          Text(
-                            '${snapshot.data['credits'].toString()} credits',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          SizedBox(width: 40),
-                          IconButton(
-                            icon: Icon(Icons.get_app),
-                            color: Colors.red[900],
-                            onPressed: () {
-                              _scrollController.animateTo(
-                                  _scrollController.position.maxScrollExtent,
-                                  duration: Duration(milliseconds: 500),
-                                  curve: Curves.ease);
-                            },
-                          ),
-                          Text(
-                            '${snapshot.data['hints'].toString()} hints left',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ],
-                      ),
-                      Divider(
-                        indent: 20,
-                        endIndent: 20,
-                        color: Colors.blueGrey,
-                      ),
-                      SizedBox(height: 10),
-                      Text(
-                        snapshot2.data['title'].toString(),
-                        style: TextStyle(
-                          fontFamily: 'Vollkorn',
-                          fontSize: 28,
-                          fontWeight: FontWeight.bold,
+                        Divider(
+                          indent: 20,
+                          endIndent: 20,
                           color: Colors.blueGrey,
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(4),
-                        child: Text(
-                          snapshot2.data['subtitle'].toString(),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            IconButton(
+                              icon: Icon(Icons.monetization_on),
+                              color: Colors.amber,
+                              onPressed: () {},
+                            ),
+                            Text(
+                              '${snapshot.data['credits'].toString()} credits',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            SizedBox(width: 40),
+                            IconButton(
+                              icon: Icon(Icons.get_app),
+                              color: Colors.red[900],
+                              onPressed: () {
+                                _scrollController.animateTo(
+                                    _scrollController.position.maxScrollExtent,
+                                    duration: Duration(milliseconds: 500),
+                                    curve: Curves.ease);
+                              },
+                            ),
+                            Text(
+                              '${snapshot.data['hints'].toString()} hints left',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ],
+                        ),
+                        Divider(
+                          indent: 20,
+                          endIndent: 20,
+                          color: Colors.blueGrey,
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          snapshot2.data['title'].toString(),
                           style: TextStyle(
                             fontFamily: 'Vollkorn',
-                            fontSize: 18,
+                            fontSize: 28,
                             fontWeight: FontWeight.bold,
                             color: Colors.blueGrey,
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              flex: 2,
-                              child: Padding(
-                                padding: const EdgeInsets.all(30.0),
-                                child: Center(
-                                    child: Text(snapshot2.data['report'],
-                                        style: TextStyle(
-                                          color: Colors.grey,
-                                          height: 1.5,
-                                        ))),
-                              ),
-                            ),
-                            Expanded(
-                              flex: 1,
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                    top: 10, bottom: 10, right: 20),
-                                child: Center(
-                                    child:
-                                        Image.network(snapshot2.data['cover'])),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Divider(
-                        indent: 20,
-                        endIndent: 20,
-                        color: Colors.blueGrey,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 8.0,
-                          horizontal: 40,
-                        ),
-                        child: Html(
-                          data: snapshot2.data['text'],
-                          style: {
-                            //Alternatively, apply a style from an existing TextStyle:
-                            "p": Style.fromTextStyle(
-                              TextStyle(
-                                fontFamily: 'Vollkorn',
-                                fontSize: 18,
-                                color: Colors.grey,
-                              ),
-                            ),
-                          },
-                        ),
-                      ),
-                      Divider(
-                        indent: 20,
-                        endIndent: 20,
-                        color: Colors.blueGrey,
-                      ),
-                      if (_userHints == 3)
-                        Text('You haven\'t used any hints yet.',
+                        Padding(
+                          padding: const EdgeInsets.all(4),
+                          child: Text(
+                            snapshot2.data['subtitle'].toString(),
                             style: TextStyle(
-                              fontStyle: FontStyle.italic,
+                              fontFamily: 'Vollkorn',
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
                               color: Colors.blueGrey,
-                            )),
-                      if (_userHints <= 2)
+                            ),
+                          ),
+                        ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Text('Hints from Special Agent Alvarado:',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.blueGrey,
-                              )),
-                        ),
-                      if (_userHints <= 2)
-                        Padding(
-                          padding: const EdgeInsets.only(left: 32.0),
                           child: Row(
                             children: [
-                              Padding(
-                                padding: const EdgeInsets.only(right: 18.0),
-                                child: CircleAvatar(
-                                  radius: 22,
-                                  backgroundImage: NetworkImage(
-                                      'https://firebasestorage.googleapis.com/v0/b/darker-slate.appspot.com/o/character_images%2Fluis_alvarado.jpg?alt=media&token=23b67d88-0faa-42e2-b5ff-5619e3f7d250'),
-                                  backgroundColor: Colors.transparent,
+                              Expanded(
+                                flex: 2,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(30.0),
+                                  child: Center(
+                                      child: Text(snapshot2.data['report'],
+                                          style: TextStyle(
+                                            color: Colors.grey,
+                                            height: 1.5,
+                                          ))),
                                 ),
                               ),
-                              Flexible(
-                                child: Bubble(
-                                  margin: BubbleEdges.only(top: 10),
-                                  nip: BubbleNip.leftTop,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      snapshot2.data['hint1'],
-                                      style: TextStyle(color: Colors.grey),
-                                    ),
-                                  ),
-                                  //child: Text('Hi, developer!'),
+                              Expanded(
+                                flex: 1,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 10, bottom: 10, right: 20),
+                                  child: Center(
+                                      child:
+                                      Image.network(snapshot2.data['cover'])),
                                 ),
                               ),
                             ],
                           ),
                         ),
-                      if (_userHints <= 1)
+                        Divider(
+                          indent: 20,
+                          endIndent: 20,
+                          color: Colors.blueGrey,
+                        ),
                         Padding(
-                          padding: const EdgeInsets.only(left: 32.0),
-                          child: Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(right: 18.0),
-                                child: CircleAvatar(
-                                  radius: 22,
-                                  backgroundImage: NetworkImage(
-                                      'https://firebasestorage.googleapis.com/v0/b/darker-slate.appspot.com/o/character_images%2Fluis_alvarado.jpg?alt=media&token=23b67d88-0faa-42e2-b5ff-5619e3f7d250'),
-                                  backgroundColor: Colors.transparent,
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 8.0,
+                            horizontal: 40,
+                          ),
+                          child: Html(
+                            data: snapshot2.data['text'],
+                            style: {
+                              //Alternatively, apply a style from an existing TextStyle:
+                              "p": Style.fromTextStyle(
+                                TextStyle(
+                                  fontFamily: 'Vollkorn',
+                                  fontSize: 18,
+                                  color: Colors.grey,
                                 ),
                               ),
-                              Flexible(
-                                child: Bubble(
-                                  margin: BubbleEdges.only(top: 10),
-                                  nip: BubbleNip.leftTop,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      snapshot2.data['hint2'],
-                                      style: TextStyle(color: Colors.grey),
-                                    ),
-                                  ),
-                                  //child: Text('Hi, developer!'),
-                                ),
-                              ),
-                            ],
+                            },
                           ),
                         ),
-                      if (_userHints == 0)
-                        Padding(
-                          padding: const EdgeInsets.only(left: 32.0),
-                          child: Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(right: 18.0),
-                                child: CircleAvatar(
-                                  radius: 22,
-                                  backgroundImage: NetworkImage(
-                                      'https://firebasestorage.googleapis.com/v0/b/darker-slate.appspot.com/o/character_images%2Fluis_alvarado.jpg?alt=media&token=23b67d88-0faa-42e2-b5ff-5619e3f7d250'),
-                                  backgroundColor: Colors.transparent,
-                                ),
-                              ),
-                              Flexible(
-                                child: Bubble(
-                                  margin: BubbleEdges.only(top: 10),
-                                  nip: BubbleNip.leftTop,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      snapshot2.data['hint3'],
-                                      style: TextStyle(color: Colors.grey),
-                                    ),
-                                  ),
-                                  //child: Text('Hi, developer!'),
-                                ),
-                              ),
-                            ],
-                          ),
+                        Divider(
+                          indent: 20,
+                          endIndent: 20,
+                          color: Colors.blueGrey,
                         ),
-                      if (_userHints == 0)
-                        Padding(
-                          padding: const EdgeInsets.only(top: 18.0),
-                          child: Text('No more hints for this level.',
+                        if (_userHints == 3)
+                          Text('You haven\'t used any hints yet.',
                               style: TextStyle(
                                 fontStyle: FontStyle.italic,
-                                fontSize: 14,
-                                color: Colors.red[900],
+                                color: Colors.blueGrey,
                               )),
-                        ),
-                      SizedBox(height: 36),
-                    ]),
+                        if (_userHints <= 2)
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text('Hints from Special Agent Alvarado:',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.blueGrey,
+                                )),
+                          ),
+                        if (_userHints <= 2)
+                          Padding(
+                            padding: const EdgeInsets.only(left: 32.0),
+                            child: Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 18.0),
+                                  child: CircleAvatar(
+                                    radius: 22,
+                                    backgroundImage: NetworkImage(
+                                        'https://firebasestorage.googleapis.com/v0/b/darker-slate.appspot.com/o/character_images%2Fluis_alvarado.jpg?alt=media&token=23b67d88-0faa-42e2-b5ff-5619e3f7d250'),
+                                    backgroundColor: Colors.transparent,
+                                  ),
+                                ),
+                                Flexible(
+                                  child: Bubble(
+                                    margin: BubbleEdges.only(top: 10),
+                                    nip: BubbleNip.leftTop,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        snapshot2.data['hint1'],
+                                        style: TextStyle(color: Colors.grey),
+                                      ),
+                                    ),
+                                    //child: Text('Hi, developer!'),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        if (_userHints <= 1)
+                          Padding(
+                            padding: const EdgeInsets.only(left: 32.0),
+                            child: Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 18.0),
+                                  child: CircleAvatar(
+                                    radius: 22,
+                                    backgroundImage: NetworkImage(
+                                        'https://firebasestorage.googleapis.com/v0/b/darker-slate.appspot.com/o/character_images%2Fluis_alvarado.jpg?alt=media&token=23b67d88-0faa-42e2-b5ff-5619e3f7d250'),
+                                    backgroundColor: Colors.transparent,
+                                  ),
+                                ),
+                                Flexible(
+                                  child: Bubble(
+                                    margin: BubbleEdges.only(top: 10),
+                                    nip: BubbleNip.leftTop,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        snapshot2.data['hint2'],
+                                        style: TextStyle(color: Colors.grey),
+                                      ),
+                                    ),
+                                    //child: Text('Hi, developer!'),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        if (_userHints == 0)
+                          Padding(
+                            padding: const EdgeInsets.only(left: 32.0),
+                            child: Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 18.0),
+                                  child: CircleAvatar(
+                                    radius: 22,
+                                    backgroundImage: NetworkImage(
+                                        'https://firebasestorage.googleapis.com/v0/b/darker-slate.appspot.com/o/character_images%2Fluis_alvarado.jpg?alt=media&token=23b67d88-0faa-42e2-b5ff-5619e3f7d250'),
+                                    backgroundColor: Colors.transparent,
+                                  ),
+                                ),
+                                Flexible(
+                                  child: Bubble(
+                                    margin: BubbleEdges.only(top: 10),
+                                    nip: BubbleNip.leftTop,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        snapshot2.data['hint3'],
+                                        style: TextStyle(color: Colors.grey),
+                                      ),
+                                    ),
+                                    //child: Text('Hi, developer!'),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        if (_userHints == 0)
+                          Padding(
+                            padding: const EdgeInsets.only(top: 18.0),
+                            child: Text('No more hints for this level.',
+                                style: TextStyle(
+                                  fontStyle: FontStyle.italic,
+                                  fontSize: 14,
+                                  color: Colors.red[900],
+                                )),
+                          ),
+                        SizedBox(height: 36),
+                      ])
+                    )],
                   );
                 });
           }),
