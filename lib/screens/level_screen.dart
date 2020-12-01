@@ -373,7 +373,7 @@ class _LevelScreenState extends State<LevelScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.black,
       appBar: AppBar(
         title: Text('Darker Slate'),
         actions: <Widget>[
@@ -503,7 +503,7 @@ class _LevelScreenState extends State<LevelScreen> {
                                       'solves',
                                       style: TextStyle(
                                         fontSize: 12,
-                                        color: Colors.black,
+                                        color: Colors.white,
                                       ),
                                     ),
                                   ],
@@ -538,7 +538,7 @@ class _LevelScreenState extends State<LevelScreen> {
                                       'difficulty rating',
                                       style: TextStyle(
                                         fontSize: 12,
-                                        color: Colors.black,
+                                        color: Colors.white,
                                       ),
                                     ),
                                   ],
@@ -574,7 +574,7 @@ class _LevelScreenState extends State<LevelScreen> {
                                       'fails',
                                       style: TextStyle(
                                         fontSize: 12,
-                                        color: Colors.black,
+                                        color: Colors.white,
                                       ),
                                     ),
                                   ],
@@ -599,6 +599,7 @@ class _LevelScreenState extends State<LevelScreen> {
                           ),
                           Text(
                             '${snapshot.data['credits'].toString()} credits',
+                            style: TextStyle(color: Colors.white),
                           ),
                           SizedBox(width: 40),
                           IconButton(
@@ -613,6 +614,7 @@ class _LevelScreenState extends State<LevelScreen> {
                           ),
                           Text(
                             '${snapshot.data['hints'].toString()} hints left',
+                            style: TextStyle(color: Colors.white),
                           ),
                         ],
                       ),
@@ -621,11 +623,12 @@ class _LevelScreenState extends State<LevelScreen> {
                         endIndent: 20,
                         color: Colors.blueGrey,
                       ),
+                      SizedBox(height: 10),
                       Text(
                         snapshot2.data['title'].toString(),
                         style: TextStyle(
                           fontFamily: 'Vollkorn',
-                          fontSize: 24,
+                          fontSize: 28,
                           fontWeight: FontWeight.bold,
                           color: Colors.blueGrey,
                         ),
@@ -650,20 +653,32 @@ class _LevelScreenState extends State<LevelScreen> {
                               flex: 2,
                               child: Padding(
                                 padding: const EdgeInsets.all(30.0),
-                                child: Center(child: Text(snapshot2.data['report'])),
+                                child: Center(
+                                    child: Text(snapshot2.data['report'],
+                                        style: TextStyle(
+                                          color: Colors.grey,
+                                          height: 1.5,
+                                        ))),
                               ),
                             ),
                             Expanded(
                               flex: 1,
                               child: Padding(
-                                padding: const EdgeInsets.only(top: 10, bottom: 10, right: 20),
-                                child: Center(child: Image.network(snapshot2.data['cover'])),
+                                padding: const EdgeInsets.only(
+                                    top: 10, bottom: 10, right: 20),
+                                child: Center(
+                                    child:
+                                        Image.network(snapshot2.data['cover'])),
                               ),
                             ),
                           ],
                         ),
                       ),
-                      Divider(),
+                      Divider(
+                        indent: 20,
+                        endIndent: 20,
+                        color: Colors.blueGrey,
+                      ),
                       Padding(
                         padding: const EdgeInsets.symmetric(
                           vertical: 8.0,
@@ -674,7 +689,11 @@ class _LevelScreenState extends State<LevelScreen> {
                           style: {
                             //Alternatively, apply a style from an existing TextStyle:
                             "p": Style.fromTextStyle(
-                              TextStyle(fontFamily: 'Vollkorn', fontSize: 16),
+                              TextStyle(
+                                fontFamily: 'Vollkorn',
+                                fontSize: 18,
+                                color: Colors.grey,
+                              ),
                             ),
                           },
                         ),
@@ -682,6 +701,7 @@ class _LevelScreenState extends State<LevelScreen> {
                       Divider(
                         indent: 20,
                         endIndent: 20,
+                        color: Colors.blueGrey,
                       ),
                       if (_userHints == 3)
                         Text('You haven\'t used any hints yet.',
@@ -797,7 +817,7 @@ class _LevelScreenState extends State<LevelScreen> {
                           child: Text('No more hints for this level.',
                               style: TextStyle(
                                 fontStyle: FontStyle.italic,
-                                fontSize: 12,
+                                fontSize: 14,
                                 color: Colors.red[900],
                               )),
                         ),
@@ -808,7 +828,7 @@ class _LevelScreenState extends State<LevelScreen> {
           }),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.red[900],
         child: Icon(Icons.vpn_key),
         tooltip: 'Solve this Level',
         onPressed: () => _solveLevel(context),
