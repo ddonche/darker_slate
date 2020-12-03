@@ -1,3 +1,4 @@
+import 'package:darker_slate/screens/account_settings_screen.dart';
 import 'package:darker_slate/screens/leaderboard_screen.dart';
 import 'package:darker_slate/screens/level_progress_screen.dart';
 import 'package:darker_slate/screens/profile_screen.dart';
@@ -33,6 +34,7 @@ class DarkerSlate extends StatelessWidget {
       ),
       initialRoute: WelcomeScreen.id,
       routes: {
+        AccountSettingsScreen.id : (context) => AccountSettingsScreen(),
         LevelScreen.id : (context) => LevelScreen(),
         NoteScreen.id : (context) => NoteScreen(),
         RegistrationScreen.id : (context) => RegistrationScreen(),

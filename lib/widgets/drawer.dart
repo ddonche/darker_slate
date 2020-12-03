@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../screens/note_screen.dart';
 import '../screens/messages_screen.dart';
+import '../screens/account_settings_screen.dart';
 
 class AppDrawer extends StatefulWidget {
   @override
@@ -127,6 +128,9 @@ class _AppDrawerState extends State<AppDrawer> {
           _createDrawerItem(
             icon: Icons.settings,
             text: 'Account Settings',
+            onTap: () {
+              Navigator.pushNamed(context, AccountSettingsScreen.id);
+            },
           ),
           Divider(),
           _createDrawerItem(
