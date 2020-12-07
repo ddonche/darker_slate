@@ -65,17 +65,173 @@ class _LevelScreenState extends State<LevelScreen> {
     }
   }
 
-  void _startAddNewNote(BuildContext ctx) {
+  final _titleController = TextEditingController();
+  final _noteTextController = TextEditingController();
+
+  void _submitNote() async {
+    FirebaseFirestore.instance
+        .collection('notes')
+        .doc(_auth.currentUser.uid)
+        .collection('usernotes')
+        .add({
+      'title': _titleController.text,
+      'text': _noteTextController.text,
+    });
+
+    Navigator.of(context).pop();
+  }
+
+  void _startAddNewNote(BuildContext ctx2) {
     showModalBottomSheet(
-      //isScrollControlled: true,
-      context: ctx,
-      builder: (_) {
-        return GestureDetector(
-          onTap: () {},
-          //child: NewNote(_addNewNote),
-          behavior: HitTestBehavior.opaque,
-        );
-      },
+      context: ctx2,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => Container(
+        height: MediaQuery.of(context).size.height * 0.55,
+        child: Card(
+          elevation: 5,
+          child: Container(
+            padding: EdgeInsets.all(10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: <Widget>[
+                TextField(
+                  decoration: InputDecoration(
+                    labelText: 'Enter Your Solution',
+                    prefixIcon: Icon(Icons.vpn_key),
+                  ),
+                  controller: _guessController,
+                  onSubmitted: (_) => _submitGuess(),
+                  /*onChanged: (val) {
+                      titleInput = val;
+                    },*/
+                ),
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 18.0),
+                    child: Column(
+                      children: [
+                        SizedBox(height: 20),
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                IconButton(
+                                  padding: EdgeInsets.all(2),
+                                  constraints: BoxConstraints(),
+                                  icon: Icon(Icons.help_center),
+                                  color: (_userHints > 0 && _userCredits >= 5)
+                                      ? Colors.red[900]
+                                      : Colors.grey,
+                                  onPressed: () {
+                                    if (_userHints > 0 && _userCredits >= 5) {
+                                      FirebaseFirestore.instance
+                                          .collection('users')
+                                          .doc(_auth.currentUser.uid)
+                                          .update({
+                                        'hints': FieldValue.increment(-1),
+                                        'hints_taken': FieldValue.increment(1),
+                                        'credits': FieldValue.increment(-5)
+                                      });
+                                      Navigator.pop(context);
+                                      _scrollController.animateTo(
+                                          _scrollController
+                                              .position.maxScrollExtent,
+                                          duration: Duration(milliseconds: 500),
+                                          curve: Curves.ease);
+                                    } else {
+                                      return;
+                                    }
+                                  },
+                                ),
+                                Text(
+                                  'Get Hint',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    '(5 Credits)',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 10,
+                                      fontStyle: FontStyle.italic,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            RaisedButton(
+                              child: Text('Solve Level'),
+                              color: Theme.of(context).primaryColor,
+                              textColor: Colors.white,
+                              onPressed: _submitGuess,
+                              //_submitGuess,
+                            ),
+                            Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                IconButton(
+                                  padding: EdgeInsets.all(2),
+                                  constraints: BoxConstraints(),
+                                  icon: Icon(Icons.double_arrow),
+                                  color: (_userCredits >= 30)
+                                      ? Colors.red[900]
+                                      : Colors.grey,
+                                  onPressed: () {
+                                    if (_userCredits >= 30) {
+                                      FirebaseFirestore.instance
+                                          .collection('users')
+                                          .doc(_auth.currentUser.uid)
+                                          .update({
+                                        'userlevel': FieldValue.increment(1),
+                                        'credits': FieldValue.increment(-30),
+                                        'hints': 3,
+                                        'levelskips': FieldValue.increment(1),
+                                      });
+                                      Navigator.pop(context);
+                                    } else {
+                                      return;
+                                    }
+                                  },
+                                ),
+                                Text(
+                                  'Skip Level',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    '(30 Credits)',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 10,
+                                      fontStyle: FontStyle.italic,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 
